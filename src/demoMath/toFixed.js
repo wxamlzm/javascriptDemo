@@ -2,7 +2,7 @@
  * @Author: zd
  * @Date: 2023-11-30 15:41:10
  * @LastEditors: zd
- * @LastEditTime: 2023-11-30 15:48:00
+ * @LastEditTime: 2023-11-30 16:01:34
  * @Description: 探究toFixed这个函数到底怎么取舍的，mdn上的翻译和多数帖子都是错的
  */
 function isNull (obj) {
@@ -32,6 +32,7 @@ function formatNum1 (num, dp) {
   if (!isNull(dp)) {
     const integer = num.toString().split('.')[0]
     let decimal = num.toString().split('.')[1]
+    // 这个补1虽然解决了问题，但看起来毫无道理
     if (!isNull(decimal) && decimal.length >= Number(dp) + 1) {
       decimal = decimal.substring(0, Number(dp) + 1)
       decimal = decimal + '1'
