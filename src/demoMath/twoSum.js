@@ -2,7 +2,7 @@
  * @Author: zd
  * @Date: 2024-01-04 14:41:16
  * @LastEditors: zd
- * @LastEditTime: 2024-01-04 14:59:53
+ * @LastEditTime: 2024-01-04 15:51:08
  * @Description:
  */
 
@@ -20,4 +20,18 @@ var twoSum = function (nums, target) {
     }
   }
   return array
+}
+
+// 这个写法降低了近一半的时间，但是为什么
+function twoSum (nums, target) {
+  let hashTable = {}
+  for (let i = 0; i < nums.length; i++) {
+    const x = nums[i]
+    const complement = target - x
+    if (complement in hashTable) {
+      return [hashTable[complement], i]
+    }
+    hashTable[x] = i
+  }
+  return null // 或者返回空数组：return [];
 }
