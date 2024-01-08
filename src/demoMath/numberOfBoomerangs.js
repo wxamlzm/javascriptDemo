@@ -6,4 +6,21 @@
  * @param {number[][]} points
  * @return {number}
  */
-function numberOfBoomerangs (points) {}
+function numberOfBoomerangs (points) {
+  let ans = 0
+  for (const p of points) {
+    const cnt = new Map()
+    for (const q of points) {
+      const dis = (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
+      cnt.set(dis, (cnt.get(dis) || 0) + 1)
+    }
+    for (const [_, m] of cnt.entries()) {
+      console.log(_, m)
+      ans += m * (m - 1)
+    }
+  }
+  return ans
+}
+
+
+numberOfBoomerangs([[0,0],[1,0],[2,0]])
