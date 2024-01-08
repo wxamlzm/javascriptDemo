@@ -5,11 +5,15 @@
  * @return {number}
  */
 var numberOfSteps = function (num) {
+  //  1. 定义全局变量存储步骤
   let steps = 0
-  while (num > 0) {
+  // 对num进行判断直到num为0
+  while (num !== 0) {
+    // 偶数
     if (num % 2 === 0) {
-      num = Math.floor(num / 2)
+      num = num / 2
     } else {
+      // 奇数
       num -= 1
     }
     steps++
