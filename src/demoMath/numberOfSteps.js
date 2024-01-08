@@ -5,11 +5,14 @@
  * @return {number}
  */
 var numberOfSteps = function (num) {
-  if (num !== 0) {
-    return
-  } else if (num % 2 === 1) {
-    numberOfSteps(num - 1)
-  } else {
-    numberOfSteps(num / 2)
+  let steps = 0
+  while (num > 0) {
+    if (num % 2 === 0) {
+      num = Math.floor(num / 2)
+    } else {
+      num -= 1
+    }
+    steps++
   }
+  return steps
 }
