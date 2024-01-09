@@ -9,19 +9,27 @@
  * @return {number[][]}
  */
 var threeSum = function (nums) {
-  let array = []
   nums.sort((a, b) => a - b)
-  for (let i = 0; i < nums.length; i++) {
-    if (i > 0 && nums[i] === nums[i - 1]) continue
-    for (let j = i + 1; j < nums.length; j++) {
-      if (j > i + 1 && nums[j] === nums[j - 1]) continue
-      for (let k = j + 1; k < nums.length; k++) {
-        if (k > j + 1 && nums[k] === nums[k - 1]) continue
-        if (nums[i] + nums[j] + nums[k] === 0) {
-          array.push([nums[i], nums[j], nums[k]].sort())
-        }
+  let res = []
+  for (let i = 0; i < nums.length - 2; i++) {
+    if (i > 0 && nums[i] === nums[i - 1]) continue // 跳过重复元素
+    let left = i + 1
+    let right = nums.length - 1
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right]
+      if (sum === 0) {
+        res.push([nums[i], nums[left], nums[right]])
+        // 跳过重复元素
+        while (left < right && nums[left] === nums[left + 1]) left++
+        while (left < right && nums[right] === nums[right - 1]) right--
+        left++
+        right--
+      } else if (sum < 0) {
+        left++
+      } else {
+        right--
       }
     }
   }
-  return array
+  return res
 }
