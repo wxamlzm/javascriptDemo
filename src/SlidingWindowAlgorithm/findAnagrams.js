@@ -7,25 +7,24 @@
  * @return {number[]}
  */
 var findAnagrams = function (s, p) {
-  const wordLength = p.length
-  const strLength = s.length
-  // 字符串s中找到字符p的所有的异位词
-  let left = 0
-  let right = left + wordLength
-  //
-  const array = []
-  const sortTargetWord = p.split('').sort().join('')
-  while (right <= strLength) {
-    const curWord = s.slice(left, right).split('').sort().join('')
-    console.log(curWord)
-    if (curWord === sortTargetWord) {
-      array.push(left)
-    }
-
-    left++
-    right++
+  let count = p.length,
+    result = [],
+    left = 0,
+    right = 0,
+    parray = Array(27)
+      .join('0')
+      .split('')
+      .map(x => parseInt(x)) // 26个0组成的数组
+  for (let pc of p) {
+    parray[pc.charCodeAt() - 97]++ // parray初始化
   }
-  return array
+  while (right < s.length) {
+    if (parray[s[right++].charCodeAt() - 97]-- >= 1) count--
+    if (count === 0) result.push(left)
+    if (right - left === p.length && parray[s[left++].charCodeAt() - 97]++ >= 0)
+      count++
+  }
+  return result
 }
 
 const s = 'abab'
