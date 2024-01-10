@@ -15,20 +15,24 @@ var findAnagrams = function (s, p) {
       .join('0')
       .split('')
       .map(x => parseInt(x)) // 26个0组成的数组
+
   for (let pc of p) {
     parray[pc.charCodeAt() - 97]++ // parray初始化
   }
+
   while (right < s.length) {
-    if (parray[s[right++].charCodeAt() - 97]-- >= 1) count--
+    if (parray[s[right++].charCodeAt() - 97]-- >= 1) {
+      count--
+    }
+
     if (count === 0) result.push(left)
-    if (right - left === p.length && parray[s[left++].charCodeAt() - 97]++ >= 0)
+
+    if (
+      right - left === p.length &&
+      parray[s[left++].charCodeAt() - 97]++ >= 0
+    ) {
       count++
+    }
   }
   return result
 }
-
-const s = 'abab'
-const p = 'ab'
-
-const arr = findAnagrams(s, p)
-console.log(arr)
