@@ -8,26 +8,15 @@
  * @return {number}
  */
 var subarraySum = function (nums, k) {
-  let left = 0
-
-  const sumArray = []
-
-  for (let right = 0; right < nums.length; right++) {
-    if (left === right) {
-      if (nums[left] === k) {
-        sumArray.push([nums[left]])
-      } else {
-        left++
-      }
-    } else {
-      let sum = nums.slice(left, right).reduce((pre, cur) => (pre += cur))
-      if (sum === k) {
-        sumArray.push(nums.slice(left, right))
-      } else {
-        left++
+  let count = 0
+  for (let start = 0; start < nums.length; ++start) {
+    let sum = 0
+    for (let end = start; end >= 0; --end) {
+      sum += nums[end]
+      if (sum == k) {
+        count++
       }
     }
-    right++
   }
-  return sumArray.length
+  return count
 }
