@@ -20,3 +20,24 @@ var subarraySum = function (nums, k) {
   }
   return count
 }
+
+var subarraySum = function (nums, k) {
+  let count = 0
+  let prefixSumMap = new Map()
+  prefixSumMap.set(0, 1) // 初始化为1，因为 0 的前缀和出现一次（空子数组）
+
+  let prefixSum = 0
+  for (let num of nums) {
+    prefixSum += num
+    if (prefixSumMap.has(prefixSum - k)) {
+      count += prefixSumMap.get(prefixSum - k)
+    }
+    if (prefixSumMap.has(prefixSum)) {
+      prefixSumMap.set(prefixSum, prefixSumMap.get(prefixSum) + 1)
+    } else {
+      prefixSumMap.set(prefixSum, 1)
+    }
+  }
+
+  return count
+}
