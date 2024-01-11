@@ -8,13 +8,27 @@
  * @return {number[]}
  */
 var maxSlidingWindow = function (nums, k) {
-  let maxArray = []
-  for (let left = 0; left < nums.length - (k - 1); left++) {
-    let right = left + k
-    const cutArray = nums.slice(left, right)
-    const maxCurArrayNum = cutArray.sort((a, b) => b - a)[0]
-    maxArray.push(maxCurArrayNum)
+  const deque = []
+  const maxArray = []
+
+  for (let i = 0; i < nums.length; i++) {
+    // 移除窗口左侧不在范围内的元素
+    if (deque.length > 0 && deque[0].index <= i - k) {
+      deque.shift()
+    }
+
+    // 将窗口右侧的元素加入单调递减队列
+    while (deque.length > 0 && nums[i] >= nums[deque[deque.length - 1].index]) {
+      deque.pop()
+    }
+    deque.push({ value: nums[i], index: i })
+
+    // 只有当i位置在窗口范围内时才添加最大值到结果数组
+    if (i >= k - 1) {
+      maxArray.push(deque[0].value)
+    }
   }
+
   return maxArray
 }
 
