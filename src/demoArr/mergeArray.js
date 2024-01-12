@@ -6,25 +6,25 @@
  * @return {number[][]}
  */
 function merge (intervals) {
-  // 先按区间的起始点排序
+  // 按区间起点对这组区间进行排序
   intervals.sort((a, b) => a[0] - b[0])
-
-  let result = [intervals[0]]
+  // 将第一个区间也就是起点最小的区间放入
+  const result = [intervals[0]]
 
   for (let i = 1; i < intervals.length; i++) {
-    let current = intervals[i]
-    let last = result[result.length - 1]
+    // 排序后区间的第二个开始
+    const current = intervals[i]
+    // 注意这里对last，也就是上一个数据的表达
+    const last = result[result.length - 1]
 
-    // 如果当前区间的起始点在结果数组最后一个区间的结束点之后，说明没有重叠，直接添加到结果数组中
+    // 如果后区间的start，大于前区间的end,必然没交集
     if (current[0] > last[1]) {
       result.push(current)
-    }
-    // 否则有重叠，更新结果数组最后一个区间的结束点为两个区间结束点的较大值
-    else {
-      last[1] = Math.max(last[1], current[1])
+    } else {
+      // 这里应该用到了地址传值了
+      last[1] = Math.max(current[1], last[1])
     }
   }
-
   return result
 }
 
@@ -34,4 +34,5 @@ let intervals = [
   [2, 6],
   [15, 18]
 ]
-merge(intervals)
+const res = merge(intervals)
+console.log(res)
