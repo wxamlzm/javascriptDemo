@@ -8,15 +8,20 @@
  */
 var maxSubArray = function (nums) {
   let maxSum = -Infinity
+  // 左指针？的最大值，我认为如果左指针的第一个值就开始减小的话，那这整个以他为起点的遍历就是无效的？
+  let maxLeftValue = -Infinity
 
   for (let left = 0; left < nums.length; left++) {
-    let sum = 0
-    sum += nums[left]
-    if (maxSum < sum) maxSum = sum
-
-    for (let right = left + 1; right <= nums.length; right++) {
-      sum += nums[right]
+    if (maxLeftValue <= nums[left]) {
+      maxLeftValue = nums[left]
+      let sum = 0
+      sum += nums[left]
       if (maxSum < sum) maxSum = sum
+
+      for (let right = left + 1; right <= nums.length; right++) {
+        sum += nums[right]
+        if (maxSum < sum) maxSum = sum
+      }
     }
   }
   return maxSum
