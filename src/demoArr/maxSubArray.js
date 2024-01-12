@@ -8,18 +8,27 @@
  */
 var maxSubArray = function (nums) {
   let maxSum = -Infinity
+
   for (let left = 0; left < nums.length; left++) {
+    let sum = 0
+    sum += nums[left]
+    if (maxSum < sum) maxSum = sum
+
     for (let right = left + 1; right <= nums.length; right++) {
-      subNums = nums.slice(left, right)
-      subNumsSum = subNums.reduce((pre, cur) => (pre += cur))
-      if (maxSum < subNumsSum) {
-        maxSum = subNumsSum
-      }
+      sum += nums[right]
+      if (maxSum < sum) maxSum = sum
     }
   }
   return maxSum
 }
+// 这是标准的穷举法
+// 但很明显是有浪费的
+// 我该怎么找到浪费的算力，并且把他优化呢
 
 const nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+// 找出最大数，然后根据最大数为中心进行双指针？ X
+// 穷举法 √ 但是速度太慢
+//
 
-maxSubArray(nums)
+const res = maxSubArray(nums)
+console.log(res)
