@@ -8,22 +8,15 @@
  */
 var maxSubArray = function (nums) {
   let maxSum = -Infinity
-  // 左指针？的最大值，我认为如果左指针的第一个值就开始减小的话，那这整个以他为起点的遍历就是无效的？
-  let maxLeftValue = -Infinity
+  let curSum = -Infinity
 
   for (let left = 0; left < nums.length; left++) {
-    if (maxLeftValue <= nums[left]) {
-      maxLeftValue = nums[left]
-      let sum = 0
-      sum += nums[left]
-      if (maxSum < sum) maxSum = sum
+    curSum = Math.max(nums[left], curSum + nums[left]) // 状态转移：取当前值与累计和中较大的一个作为新的累计和
+    maxSum = Math.max(maxSum, curSum) // 比较当前最大子数组和与历史最大子数组和
 
-      for (let right = left + 1; right < nums.length; right++) {
-        sum += nums[right]
-        if (maxSum < sum) maxSum = sum
-      }
-    }
+    // 上述两行代码已经完成了求解过程，所以不需要内层循环
   }
+
   return maxSum
 }
 // 这是标准的穷举法
