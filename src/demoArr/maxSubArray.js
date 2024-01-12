@@ -18,7 +18,7 @@ var maxSubArray = function (nums) {
       sum += nums[left]
       if (maxSum < sum) maxSum = sum
 
-      for (let right = left + 1; right <= nums.length; right++) {
+      for (let right = left + 1; right < nums.length; right++) {
         sum += nums[right]
         if (maxSum < sum) maxSum = sum
       }
