@@ -8,16 +8,16 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-  let max = 0
-  for (let buyIndex = 0; buyIndex < prices.length - 1; buyIndex++) {
-    for (let sellIndex = buyIndex + 1; sellIndex < prices.length; sellIndex++) {
-      max = Math.max(max, prices[sellIndex] - prices[buyIndex])
-    }
+  let maxProfit = 0
+  let minPrice = Infinity
+  for (let i = 0; i < prices.length; i++) {
+    minPrice = Math.min(prices[i], minPrice)
+    maxProfit = Math.max(maxProfit, prices[i] - minPrice)
   }
-  return max
+  return maxProfit
 }
 
-const prices = [7, 6, 4, 3, 1]
+const prices = [5, 10, 1, 6]
 
 const res = maxProfit(prices)
 console.log(res)
