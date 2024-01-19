@@ -6,16 +6,16 @@
  * @return {number[][]}
  */
 var generateTriangle = function (numRows) {
-  const dp = []
-
+  let dp = []
   for (let i = 0; i < numRows; i++) {
     dp[i] = new Array(i + 1).fill(1)
-    for (let j = 2; j < numRows; j++) {
-      dp[i][j] = dp[i][j - 1] + dp[i][j]
+    for (let j = 1; j < i; j++) {
+      dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]
     }
   }
-  console.log(dp)
+  return dp
 }
 
 const numRows = 5
-generateTriangle(numRows)
+const res = generateTriangle(numRows)
+console.log(res)
