@@ -11,7 +11,7 @@ var splitWordsBySeparator = function (words, separator) {
   for (let i = 0; i < words.length; i++) {
     const word = words[i]
     if (word.includes(separator)) {
-      const newWordArray = word.split(separator).filter(ele => ele !== '')
+      const newWordArray = word.split(separator).filter(ele => ele.length != 0)
       newWordsArray = newWordsArray.concat(newWordArray)
     } else {
       newWordsArray.push(word)
