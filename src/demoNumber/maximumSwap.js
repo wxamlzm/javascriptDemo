@@ -35,3 +35,20 @@ var maximumSwap = function (num) {
 const num = 9973
 const res = maximumSwap(num)
 console.log(res)
+
+var maximumSwap2 = function(num) {
+  let arr = String(num).split('').map(Number);
+  const tmp = arr.slice();
+  const n = arr.length;
+  for (let i = 0, j = 0; i < n; i++) {
+      const mx = Math.max(...tmp);
+      j = arr.lastIndexOf(mx);
+      if (arr[i] != mx && j != i) {
+          j = arr.lastIndexOf(mx);
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+          break;
+      }
+      tmp.shift();
+  }
+  return parseInt(arr.join(''));
+};
