@@ -9,36 +9,21 @@
  * @return {number[]}
  */
 var partitionLabels = function (s) {
-  let strMap = []
-  for (let i = 0; i < s.length; i++) {
-    const curIndex = strMap.findIndex(ele => ele.word === s[i])
-
-    if (curIndex === -1) {
-      strMap.push({ word: s[i], startIndex: i, endIndex: i })
-    } else {
-      strMap[curIndex].endIndex = i
+  const last = new Array(26)
+  const length = s.length
+  const codePointA = 'a'.codePointAt(0)
+  for (let i = 0; i < length; i++) {
+    last[s.codePointAt(i) - codePointA] = i
+  }
+  const partition = []
+  let start = 0,
+    end = 0
+  for (let i = 0; i < length; i++) {
+    end = Math.max(end, last[s.codePointAt(i) - codePointA])
+    if (i == end) {
+      partition.push(end - start + 1)
+      start = end + 1
     }
   }
-  strMap.sort((a, b) => a.startIndex - b.startIndex)
-  console.log(strMap)
-
-  const answer = []
-  let startIndex = 0
-  let endIndex = strMap[1].endIndex
-  for (let i = 0; i < strMap.length; i++) {
-    if (strMap[i].startIndex < endIndex) {
-      endIndex = Math.max(strMap[i].endIndex, endIndex)
-    }
-
-    if (strMap[i].startIndex > endIndex || i === strMap.length - 1) {
-      let len = endIndex - startIndex + 1
-      answer.push(len)
-      startIndex = strMap[i].startIndex
-      endIndex = strMap[i].endIndex
-    }
-  }
-  return answer
+  return partition
 }
-
-const s = 'caedbdedda'
-partitionLabels(s)
