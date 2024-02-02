@@ -8,17 +8,18 @@
  * @return {boolean}
  */
 var searchMatrix = function (matrix, target) {
-  let i = matrix.length - 1
+  if (matrix.length === 0) return false
 
-  let j = 0
+  let row = 0
+  let col = matrix[0].length - 1
 
-  while (i >= 0 && j < matrix[0].length) {
-    if (matrix[i][j] > target) {
-      i--
-    } else if (matrix[i][j] < target) {
-      j++
-    } else {
+  while (col >= 0 && row <= matrix.length - 1) {
+    if (matrix[row][col] === target) {
       return true
+    } else if (matrix[row][col] > target) {
+      col--
+    } else {
+      row++
     }
   }
 
