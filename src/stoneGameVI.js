@@ -18,14 +18,25 @@
  * @param {number[]} bobValues
  * @return {number}
  */
-var stoneGameVI = function(aliceValues, bobValues) {
-  // 最优策略
-  // 自己得最大值 大于对方得最大值
+var stoneGameVI = function (aliceValues, bobValues) {
+  const values = aliceValues.map((a, i) => [a + bobValues[i], a, bobValues[i]])
+  values.sort((a, b) => b[0] - a[0])
+  const aliceSum = values
+    .filter((_, i) => i % 2 === 0)
+    .reduce((sum, value) => sum + value[1], 0)
+  const bobSum = values
+    .filter((_, i) => i % 2 !== 0)
+    .reduce((sum, value) => sum + value[2], 0)
+  if (aliceSum > bobSum) {
+    return 1
+  } else if (aliceSum === bobSum) {
+    return 0
+  } else {
+    return -1
+  }
+}
 
+let aliceValues = [2, 4, 3],
+  bobValues = [1, 6, 7]
 
-  // 假设 偶数时先手的至少不会输
-  // 假设 奇数时先手
-
-};
-
-let aliceValues = [1,3], bobValues = [2,1]
+stoneGameVI(aliceValues, bobValues)
