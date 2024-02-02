@@ -8,28 +8,25 @@
  * @return {boolean}
  */
 var canPlaceFlowers = function (flowerbed, n) {
-  const flowerbedLen = flowerbed.length
-  // 插入n个数，使每个数的两边都是0
-  // 寻找最长的0的长度
-  let maxZeroCount = 0
-  for (let i = 0; i < flowerbedLen; i++) {
-    if (flowerbed[i] !== 0) continue
-    let count = 1
-    for (let j = i + 1; j < flowerbedLen; j++) {
-      if (flowerbed[j] === 0) {
-        count++
+  let count = 0
+  const m = flowerbed.length
+  let prev = -1
+  for (let i = 0; i < m; i++) {
+    if (flowerbed[i] === 1) {
+      if (prev < 0) {
+        count += Math.floor(i / 2)
       } else {
-        maxZeroCount = Math.max(maxZeroCount, count)
-        break
+        count += Math.floor((i - prev - 2) / 2)
       }
+      prev = i
     }
   }
-  const flowerCont = 2 * n - 1
-  if (maxZeroCount - 2 >= flowerCont) {
-    return true
+  if (prev < 0) {
+    count += (m + 1) / 2
   } else {
-    return false
+    count += (m - prev - 1) / 2
   }
+  return count >= n
 }
 
 let flowerbed = [1, 0, 1, 0, 1, 0, 1],
