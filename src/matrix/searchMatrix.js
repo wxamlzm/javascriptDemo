@@ -8,31 +8,21 @@
  * @return {boolean}
  */
 var searchMatrix = function (matrix, target) {
-  let rowLeft = 0
-  let rowRight = matrix[0].length - 1
+  let i = matrix.length - 1
 
-  let colTop = 0
-  let colBottom = matrix.length - 1
-  let ans = false
+  let j = 0
 
-  while (rowLeft < rowRight && colTop < colBottom) {
-    let rowMid = (rowRight - rowLeft) >> 1
-    let colMid = (colBottom - colTop) >> 1
-    const source = matrix[rowMid][colMid]
-    if (target === source) {
-      ans = true
-      break
-    }
-    if (target < source) {
-      rowLeft = rowMid
-      colBottom = colMid
+  while (i >= 0 && j < matrix[0].length) {
+    if (matrix[i][j] > target) {
+      i--
+    } else if (matrix[i][j] < target) {
+      j++
     } else {
-      rowRight = rowMid
-      colTop = colMid
+      return true
     }
   }
 
-  return ans
+  return false
 }
 
 let matrix = [
