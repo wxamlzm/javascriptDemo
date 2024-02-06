@@ -7,14 +7,29 @@
  * @return {number[]}
  */
 var productExceptSelf = function (nums) {
-  const result = new Array(nums.length).fill(1)
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = 0; j < nums.length; j++) {
-      if (j === i) continue
-      result[i] *= nums[j]
-    }
+  const len = nums.length
+
+  if (len === 0) return []
+
+  let ans = new Array(len).fill(1)
+
+  // 计算左侧乘积数组
+
+  for (let i = 1; i < len; i++) {
+    ans[i] = ans[i - 1] * nums[i - 1]
   }
-  return result
+
+  let rightProduct = 1
+
+  // 计算右侧乘积并更新左侧数组
+  // 虽然是两次循环，但总量没超过n
+  for (let i = len - 2; i >= 0; i--) {
+    rightProduct *= nums[i + 1]
+
+    ans[i] *= rightProduct
+  }
+
+  return ans
 }
 
 let nums = [-1, 1, 0, -3, 3]
