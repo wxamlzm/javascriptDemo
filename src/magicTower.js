@@ -55,6 +55,31 @@ var magicTower = function (nums) {
   // 完全理解错了，触发条件不是当sum为-1的时候，这是个最优解问题，需要整体对怎么进行位置调整做判断
 
   // 依旧认为是动态规划问题，问题是子问题是什么，如果不是按序列进行递推的话
+
+  // 看起来和目标答案只有一步之遥，是放弃的太早了吗，只需要更新调整方案就可以了，但就是没做到
+  let bloodVolume = 1
+  const noAdjustMinNums = []
+  let adJustNumsTotal = 0
+  let adjustCount = 0
+  for (let i = 0; i < nums.length; i++) {
+    bloodVolume += nums[i]
+    if (nums[i] < 0) {
+      // 保存没有被调整过的负数
+      noAdjustMinNums.push(nums[i])
+    }
+    // 血量不够，需要调整房间访问顺序
+    if (bloodVolume <= 0) {
+      // 由小到大排序
+      noAdjustMinNums.sort((a, b) => a - b)
+      // 把最小的负数调整到后面
+      let minNum = noAdjustMinNums.shift()
+      bloodVolume += -minNum //恢复血量
+      adJustNumsTotal += minNum // 记录这些被调整的负数之和
+      adjustCount++ // 调整次数++
+    }
+  }
+  if (-adJustNumsTotal > bloodVolume) return -1
+  return adjustCount
 }
 
 let nums = [100, 100, 100, -250, -60, -140, -50, -50, 100, 150]
