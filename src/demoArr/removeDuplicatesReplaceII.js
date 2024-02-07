@@ -7,20 +7,10 @@
  * @return {number}
  */
 var removeDuplicates = function (nums) {
-  let leftPointer = 0
-  let count = 1
-  while (leftPointer < nums.length) {
-    let rightPointer = leftPointer + count
-    if (rightPointer >= nums.length) break
-    if (nums[leftPointer] === nums[rightPointer]) {
-      if (count <= 1) {
-        count++
-      } else {
-        nums.splice(rightPointer, 1)
-      }
-    } else {
-      leftPointer = rightPointer
-      count = 1
+  for (var i = 2; i < nums.length; i++) {
+    if (nums[i] === nums[i - 2]) {
+      nums.splice(i, 1)
+      i--
     }
   }
   return nums.length
