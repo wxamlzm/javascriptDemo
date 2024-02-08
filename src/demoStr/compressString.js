@@ -16,6 +16,7 @@ var compressString = function (S) {
   while (left + count < S.length) {
     // 因为放在count++后，会出现left + count 对应的并不是curWord的现象
     // 即count++后需要重新进行条件判断
+    // 我认为left+count是S得下标，S的下标理所当然到S.length-1为止
     if (left + count === S.length - 1) {
       // 拼接末尾
       sCompressString += word
