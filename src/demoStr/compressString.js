@@ -14,6 +14,14 @@ var compressString = function (S) {
   let word = S[left]
 
   while (left + count < S.length) {
+    // 因为放在count++后，会出现left + count 对应的并不是curWord的现象
+    // 即count++后需要重新进行条件判断
+    if (left + count === S.length - 1) {
+      // 拼接末尾
+      sCompressString += word
+      sCompressString += count
+    }
+
     const curWord = S[left + count]
     if (word === curWord) {
       count++
@@ -25,11 +33,6 @@ var compressString = function (S) {
       word = curWord
       left = left + count
       count = 1
-    }
-    if (left + count === S.length - 1) {
-      // 拼接末尾
-      sCompressString += word
-      sCompressString += count
     }
   }
 
