@@ -7,28 +7,18 @@
  * @param {number[]} height
  * @return {number}
  */
-var maxArea = function (heightArray) {
-  // 这更像一道数学题啊
-  // 横轴是index吧，纵轴就是heightArray[index],然后我要获取的是 (Math.abs(index[i] - index[j])) * (Math.abs(heightArray[i]-heightArray[j]))
-  let left = 0
-  let right = heightArray.length - 1
-  let maxWater = 0
+var maxArea = function (height) {
+  let maxArea = -0
 
-  while (left < right) {
-    // 计算当前左右指针对应的高度形成的矩形面积
-    const currentHeight = Math.min(heightArray[left], heightArray[right])
-    const currentArea = currentHeight * (right - left)
+  let heightLen = height.length
 
-    // 更新最大水量
-    maxWater = Math.max(maxWater, currentArea)
-
-    // 移动高度较小的那一端，增大宽度或保持相同高度但宽度更大的情况
-    if (heightArray[left] < heightArray[right]) {
-      left++
-    } else {
-      right--
+  for (let i = 0; i < heightLen - 1; i++) {
+    let maxHeight = height[i]
+    for (let j = i + 1; j < heightLen; j++) {
+      maxHeight = Math.min(height[i], height[j])
+      maxArea = Math.max(maxArea, Math.imul(maxHeight, j - i))
     }
   }
 
-  return maxWater
+  return maxArea
 }
