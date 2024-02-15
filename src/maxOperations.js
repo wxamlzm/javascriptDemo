@@ -10,22 +10,18 @@
  * @return {number}
  */
 var maxOperations = function (nums, k) {
-  const numsMap = {}
-
+  let result = 0
+  const numsCount = new Map()
   for (let i = 0; i < nums.length; i++) {
-    if (!numsMap[nums[i]]) {
-      numsMap[nums[i]] = k - nums[i]
+    const complete = k - nums[i]
+    if (numsCount.has(complete) && numsCount.get(complete) > 0) {
+      result++
+      numsCount.set(complete, numsCount.get(complete) - 1)
+    } else {
+      numsCount.set(nums[i], (numsCount.get(nums[i]) || 0) + 1)
     }
   }
-
-  let count = 0
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i] === numsMap[k - nums[i]]) {
-      count++
-    }
-  }
-
-  return Math.floor(count / 2)
+  return result
 }
 
 let nums = [3, 1, 3, 4, 3],
