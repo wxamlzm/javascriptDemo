@@ -8,14 +8,13 @@
  * @return {number}
  */
 var largestAltitude = function (gain) {
-  let highArray = new Array(gain.length + 1).fill(0)
-  let maxHeight = 0
-  for (let i = 1; i < highArray.length; i++) {
-    highArray[i] = highArray[i - 1] + gain[i - 1]
-    maxHeight = Math.max(maxHeight, highArray[i])
+  let ans = 0,
+    sum = 0
+  for (const x of gain) {
+    sum += x
+    ans = Math.max(ans, sum)
   }
-
-  return maxHeight
+  return ans
 }
 
 let gain = [-5, 1, 5, 0, -7]
