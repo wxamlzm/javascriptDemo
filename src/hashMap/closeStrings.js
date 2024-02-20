@@ -15,37 +15,25 @@
  * @return {boolean}
  */
 var closeStrings = function (word1, word2) {
-  // 长度不一样肯定不行
-  const word1Len = word1.length
-  const word2Len = word2.length
-  if (word1Len !== word2Len) return false
-  // 可以多次操作
-  // 长度相同的情况
-  // 操作1即 两者哈希表完全一致？
-  // 操作2即 两者哈希表的value一致即可
-
-  // 翻译操作1,2，即两者哈希表的value的Array，排除顺序完全一致即可?
-  const word1Map = new Map()
-  const word2Map = new Map()
-  for (let i = 0; i < word1Len; i++) {
-    if (word1Map.has()) {
-      word1Map[word1[i]] += 1
-    } else {
-      word1Map[word1[i]] = 1
-    }
-
-    if (word2Map[word2[i]]) {
-      word2Map[word2[i]] += 1
-    } else {
-      word2Map[word2[i]] = 1
+  let count1 = new Array(26).fill(0),
+    count2 = new Array(26).fill(0)
+  for (let i = 0; i < word1.length; i++) {
+    count1[word1.charCodeAt(i) - 97]++
+  }
+  for (let i = 0; i < word2.length; i++) {
+    count2[word2.charCodeAt(i) - 97]++
+  }
+  for (let i = 0; i < 26; i++) {
+    if (
+      (count1[i] > 0 && count2[i] == 0) ||
+      (count1[i] == 0 && count2[i] > 0)
+    ) {
+      return false
     }
   }
-  // 只要word1Map里的value word2Map都有
-
-  for (let key in word1Map) {
-  }
-
-  console.log(word1Map, word2Map)
+  count1.sort()
+  count2.sort()
+  return count1.toString() == count2.toString()
 }
 
 let word1 = 'cabbba',
