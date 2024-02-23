@@ -7,21 +7,33 @@
  * @return {string[]}
  */
 var letterCombinations = function (digits) {
-  const digitsMap = {
-    2: ['a', 'b', 'c'],
-    3: ['d', 'e', 'f'],
-    4: ['g', 'h', 'i'],
-    5: ['j', 'k', 'l'],
-    6: ['m', 'n', 'o'],
-    7: ['p', 'q', 'r', 's'],
-    8: ['t', 'u', 'v'],
-    9: ['w', 'x', 'y', 'z']
+  if (digits == '') return []
+  let dpResult = []
+  let len = digits.length
+  let inputMap = {
+    2: 'abc',
+    3: 'def',
+    4: 'ghi',
+    5: 'jkl',
+    6: 'mno',
+    7: 'pqrs',
+    8: 'tuv',
+    9: 'wxyz'
   }
-
-  for (let i = 0; i < digits.length; i++) {
-    const res = digitsMap[digits[i]]
-    console.log(res)
+  for (let i = 0, len = digits.length; i < len; i++) {
+    dpResult[i] = []
+    let str = inputMap[digits[i]]
+    for (let j = 0, lenj = str.length; j < lenj; j++) {
+      if (i == 0) {
+        dpResult[i].push(str[j])
+      } else {
+        for (let k = 0, lenk = dpResult[i - 1].length; k < lenk; k++) {
+          dpResult[i].push(dpResult[i - 1][k] + str[j])
+        }
+      }
+    }
   }
+  return dpResult[len - 1]
 }
 
 let digits = '23'
