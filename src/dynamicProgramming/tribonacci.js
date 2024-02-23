@@ -17,7 +17,7 @@
 // }
 
 var tribonacci = function (n) {
-  const dp = new Array(n).fill(0)
+  const dp = new Array(n + 1).fill(0)
 
   dp[0] = 0
   dp[1] = 1
@@ -26,7 +26,6 @@ var tribonacci = function (n) {
   for (let i = 3; i <= n; i++) {
     dp[i] = dp[i - 3] + dp[i - 2] + dp[i - 1]
   }
-
   return dp[n]
 }
 
