@@ -49,3 +49,4 @@ let s = '()'
 
 const res = isValid(s)
 console.log(res)
+// PS，结果这个思路就是官方思路
