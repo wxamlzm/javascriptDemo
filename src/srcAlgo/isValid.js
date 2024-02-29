@@ -20,34 +20,32 @@ var isValid = function (s) {
   bracketsMap.set('[', ']')
   bracketsMap.set('{', '}')
 
+  // 奇数肯定不满足条件？
+  if (sArr.length % 2 !== 0) return false
+
   // 新建栈
   const bracketsStack = []
   // 就单次实例而言是固定长度的遍历，选用for
   // 遍历字符串数组进行栈操作
 
   for (let i = 0; i < sArr.length; i++) {
-    // 左括号，即map的key用于压栈；右括号即map的val用于消栈？
-    if (bracketsMap.has(sArr[i])) {
-      // 代表是左括号，入栈
-      bracketsStack.push(sArr[i])
+    // 获取栈顶元素
+    const stackTop = bracketsStack[bracketsStack.length - 1]
+    // 获取和栈顶左括号对应的右括号
+    bracketsRight = bracketsMap.get(stackTop)
+    // 如果是和栈顶对应的右括号，则出栈
+    if (bracketsRight === sArr[i]) {
+      // 从栈顶即数组末尾删除一个
+      bracketsStack.pop()
     } else {
-      // 不是左括号，而是右括号
-      // 获取栈顶元素
-      const stackTop = bracketsStack[bracketsStack.length - 1]
-      // 获取和栈顶左括号对应的右括号
-      bracketsRight = bracketsMap.get(stackTop)
-      // 如果是和栈顶对应的右括号，则出栈
-      if (bracketsRight === sArr[i]) {
-        // 从栈顶即数组末尾删除一个
-        bracketsStack.pop()
-      }
+      bracketsStack.push(sArr[i])
     }
   }
   // 为空则全部出栈即配对成功，否则失败
   return bracketsStack.length === 0
 }
 
-let s = '()[]{}'
+let s = '()'
 
 const res = isValid(s)
 console.log(res)
