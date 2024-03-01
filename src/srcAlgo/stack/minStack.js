@@ -8,7 +8,8 @@
 //     int getMin() 获取堆栈中的最小元素。
 
 var MinStack = function () {
-  let stack = []
+  this.stack = []
+  this.minValues = []
 }
 
 /**
@@ -17,6 +18,11 @@ var MinStack = function () {
  */
 MinStack.prototype.push = function (val) {
   this.stack.push(val)
+
+  // 如果 minValues 为空或者新值小于等于当前最小值，将新值添加到 minValues 中
+  if (this.minValues.length === 0 || val <= this.getMin()) {
+    this.minValues.push(val)
+  }
 }
 
 /**
@@ -24,6 +30,12 @@ MinStack.prototype.push = function (val) {
  */
 MinStack.prototype.pop = function () {
   if (this.stack.length === 0) throw new Error('栈为空')
+
+  // 只有当弹出的元素等于当前最小值时，才从 minValues 中移除
+  if (this.stack[this.stack.length - 1] === this.getMin()) {
+    this.minValues.pop()
+  }
+
   this.stack.pop()
 }
 
@@ -40,8 +52,7 @@ MinStack.prototype.top = function () {
  */
 MinStack.prototype.getMin = function () {
   if (this.stack.length === 0) throw new Error('栈为空')
-  this.stack.sort((a, b) => b - a)
-  return this.stack[0]
+  return this.minValues[this.minValues.length - 1]
 }
 
 /**
