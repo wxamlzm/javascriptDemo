@@ -30,3 +30,6 @@ let word = '99824435',
   m = 3
 const res = divisibilityArray(word, m)
 console.log(res)
+
+
+// 数学知识：大数取余不一定需要知道所有数，但规则我记不住
