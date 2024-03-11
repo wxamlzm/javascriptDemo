@@ -5,23 +5,19 @@
  * @return {number}
  */
 var firstUniqChar = function (s) {
-  // 缺乏美感
   let sMap = {}
   for (let i = 0; i < s.length; i++) {
     if (sMap[s[i]]) {
-      sMap[s[i]].count++
+      sMap[s[i]] += 1
     } else {
-      sMap[s[i]] = { count: 1, index: i }
+      sMap[s[i]] = 1
     }
   }
-  let minIndex = Infinity
-  for (let key in sMap) {
-    if (sMap[key].count === 1) {
-      minIndex = Math.min(sMap[key].index, minIndex)
-    }
+
+  for (let i = 0; i < s.length; i++) {
+    if (sMap[s[i]] === 1) return i
   }
-  if (minIndex === Infinity) return -1
-  return minIndex
+  return -1
 }
 
 let s = 'loveleetcode'
