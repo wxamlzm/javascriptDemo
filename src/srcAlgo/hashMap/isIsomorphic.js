@@ -19,5 +19,26 @@
  * @return {boolean}
  */
 var isIsomorphic = function (s, t) {
-  
+  // 如果按顺序一一对应，那么就符合，否则就不符合
+  const s2tMap = {}
+  const t2sMap = {}
+
+  for (let i = 0; i < s.length; i++) {
+    const a = s[i]
+    const b = t[i]
+
+    if ((s2tMap[a] || t2sMap[b]) && (s2tMap[a] !== b || t2sMap[b] !== a)) {
+      return false
+    }
+
+    s2tMap[a] = b
+    t2sMap[b] = a
+  }
+
+  return true
 }
+
+let s = 'foo',
+  t = 'bar'
+const res = isIsomorphic(s, t)
+console.log(res)
