@@ -2,7 +2,7 @@
  * @Author: zd
  * @Date: 2024-03-14 08:15:52
  * @LastEditors: zd
- * @LastEditTime: 2024-03-14 08:45:34
+ * @LastEditTime: 2024-03-14 08:48:02
  * @Description:
  */
 // 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
@@ -25,6 +25,7 @@ var isSubsequence = function (s, t) {
     if (queue.length === s.length) return true
     if (t[i] === s[j]) {
       queue.push(t[i])
+      // 这其实也是双指针
       j++
     }
   }
