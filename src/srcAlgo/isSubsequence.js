@@ -2,7 +2,7 @@
  * @Author: zd
  * @Date: 2024-03-14 08:15:52
  * @LastEditors: zd
- * @LastEditTime: 2024-03-14 08:34:22
+ * @LastEditTime: 2024-03-14 08:45:34
  * @Description:
  */
 // 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
@@ -19,28 +19,16 @@
  * @return {boolean}
  */
 var isSubsequence = function (s, t) {
-  let sIndex = 0
-
-  const stack = []
-
+  const queue = []
+  let j = 0
   for (let i = 0; i < t.length; i++) {
-    if (sIndex < s.length && t[i] === s[sIndex]) {
-      stack.push(t[i])
-
-      sIndex++
+    if (queue.length === s.length) return true
+    if (t[i] === s[j]) {
+      queue.push(t[i])
+      j++
     }
   }
-  // 检查 stack 是否包含了 s 中的所有字符（按顺序）
-  if (s.length > stack.length) return false
-  while (sIndex < s.length && stack.length > 0) {
-    if (stack.pop() !== s[sIndex]) {
-      return false
-    }
-
-    sIndex++
-  }
-
-  return sIndex === s.length
+  return queue.length === s.length
 }
 
 let s = 'aaaaaa',
