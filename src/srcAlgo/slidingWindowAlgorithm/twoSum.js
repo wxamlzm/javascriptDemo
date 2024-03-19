@@ -11,11 +11,31 @@
  * @return {number[]}
  */
 var twoSum = function (numbers, target) {
-  for (let i = 0; i < numbers.length; i++) {
-    for (let j = i + 1; j < numbers.length; j++) {
-      if (numbers[i] + numbers[j] === target) {
-        return [i + 1, j + 1]
-      }
+  // for (let i = 0; i < numbers.length; i++) {
+  //   for (let j = i + 1; j < numbers.length; j++) {
+  //     if (numbers[i] + numbers[j] === target) {
+  //       return [i + 1, j + 1]
+  //     }
+  //   }
+  // }
+  // 优化思路
+  // 条件： “非递减顺序排列”，即 numbers[i+1] >= numbers[i]
+  // 条件： “假设每个输入 只对应唯一答案”
+  // 从这个角度出发考虑是否能节省遍历点
+  // 现在的复杂度是O(N^2)，可以考虑的只有O(N)和O(nlogn)
+
+  // 结合以上条件，我让两个指针分别从两端像中间靠拢，当左右位置的和大于target时，右指针-1，当左右位置的和小于target时左指针+1
+  const len = numbers.length
+  let i = 0
+  let j = len - 1
+  while (i < j) {
+    const sum = numbers[i] + numbers[j]
+    if (sum > target) {
+      j = j - 1
+    } else if (sum < target) {
+      i = i + 1
+    } else {
+      return [i + 1, j + 1]
     }
   }
 }
