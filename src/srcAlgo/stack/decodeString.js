@@ -11,25 +11,29 @@
  * @return {string}
  */
 var decodeString = function (s) {
-  // 这题最麻烦的还是在括号的嵌套
-  let str = ''
-  let arr = []
-  let beishu = 0
+  //   不会，抄的
+  let numStack = []
+  let strStack = []
+  let ans = ''
+  let count = 0
   for (let i = 0; i < s.length; i++) {
-    // 是数值得情况，缓存倍数
-    if (isNaN(s[i]) === false) {
-      beishu = s[i]
-    } else if (s[i] === '[') {
-      str = ''
-    } else if (isEnglishLetter(s[i])) {
-      str += s[i]
-    } else if (s[i] === ']') {
-      for (let i = 1; i <= beishu; i++) {
-        arr.push(str)
-      }
+    let c = s[i]
+    // 是数字
+    if (!isNaN(c)) {
+      count = count * 10 + parseInt(c)
+    } else if (c === '[') {
+      strStack.push(ans)
+      ans = ''
+      numStack.push(count)
+      count = 0
+    } else if (c === ']') {
+      const times = numStack.pop()
+      ans = strStack.pop() + ans.repeat(times)
+    } else {
+      ans += c
     }
   }
-  return arr.join('')
+  return ans
 }
 
 function isEnglishLetter (char) {
