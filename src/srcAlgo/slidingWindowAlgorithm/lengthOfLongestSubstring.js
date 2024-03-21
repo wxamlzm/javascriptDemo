@@ -1,27 +1,27 @@
-// 给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。
+// 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串的长度。
 
 /**
  * @param {string} s
  * @return {number}
  */
 var lengthOfLongestSubstring = function (s) {
-  let index = 0
-  let maxLength = 0
-  // 存储当前字符串每个字符的哈希表
-  const map = new Map()
-  // 遍历当前字符串
-  for (let i = 0; i < s.length; i++) {
-    const curWord = s[i]
-    // 判断当前字符是否已经在哈希表内
-    if (map.has(curWord)) {
-      index = Math.max(map.get(curWord) + 1, index)
-    }
-    maxLength = Math.max(maxLength, i - index + 1)
+  let i = -1
 
-    map.set(curWord, i)
+  const sMap = {}
+
+  let maxLen = 0
+
+  for (let j = 0; j < s.length; j++) {
+    if (sMap[s[j]] !== undefined) {
+      i = Math.max(i, sMap[s[j]])
+    }
+    sMap[s[j]] = j
+
+    maxLen = Math.max(maxLen, j - i)
   }
-  return maxLength
+  return maxLen
 }
-let s = 'abcabcbb'
+
+let s = 'au'
 const res = lengthOfLongestSubstring(s)
 console.log(res)
