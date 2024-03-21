@@ -5,29 +5,20 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function (s) {
-  // 左指针
-  let left = 0
-  // 缓存最大字符
-  let maxLen = 0
-  // 缓存各字符的最近坐标
-  const sMap = {}
-  // 右指针跟着遍历走
-  for (let right = 0; right < s.length; right++) {
-    // 当没有重复时
-    if (sMap[s[right]] === undefined) {
-      sMap[s[right]] = right
-    }
-    // 当重复时
-    // 保存当前已经历的最长字符
-    // 更新左指针到当前的重复点
-    // 让右指针继续前进
-    else {
-      const curMaxLen = right - 1 - left + 1
-      maxLen = Math.max(curMaxLen, maxLen)
-      left = right
-    }
-  }
+  let i = -1
 
+  const sMap = {}
+
+  let maxLen = 0
+
+  for (let j = 0; j < s.length; j++) {
+    if (sMap[s[j]] !== undefined) {
+      i = Math.max(i, sMap[s[j]])
+    }
+    sMap[s[j]] = j
+
+    maxLen = Math.max(maxLen, j - i)
+  }
   return maxLen
 }
 
