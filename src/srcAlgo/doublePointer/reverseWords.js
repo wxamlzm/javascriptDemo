@@ -2,7 +2,7 @@
  * @Author: zd
  * @Date: 2024-03-20 10:42:43
  * @LastEditors: zd
- * @LastEditTime: 2024-03-21 14:08:11
+ * @LastEditTime: 2024-03-21 14:17:05
  * @Description:
  */
 // 给你一个字符串 s ，请你反转字符串中 单词 的顺序。
@@ -16,23 +16,24 @@
  * @return {string}
  */
 var reverseWords = function (s) {
-  const len = s.length
+  const sFormat = s.trim()
+  const len = sFormat.length
   let fast = len - 1
   let slow = fast
   // 初始化两个指针，因为需要反转，所以从s末尾开始
   // 期望快指针到达word的头，而慢指针停留在word的尾部
   const strArr = []
   while (fast >= 0) {
-    while (fast >= 0 && s[fast] === ' ') {
+    while (fast >= 0 && sFormat[fast] === ' ') {
       fast--
       slow = fast
     }
 
-    while (fast >= 0 && s[fast] !== ' ') {
+    while (fast >= 0 && sFormat[fast] !== ' ') {
       fast--
     }
 
-    strArr.push(s.substring(fast + 1, slow + 1))
+    strArr.push(sFormat.substring(fast + 1, slow + 1))
   }
 
   return strArr.join(' ')
