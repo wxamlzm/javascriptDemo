@@ -14,19 +14,26 @@
  * @return {string}
  */
 var convert = function (s, numRows) {
-  const matrix = Array.from({ length: numRows }, () => [])
-  let row = 0
-  let col = 0
+  if (numRows < 2) return s
 
-  matrix[row][col] = s[0]
-  console.log(matrix)
+  const strArr = new Array(numRows).fill('')
+
   // 已遍历字符数
-  let count = 0
-  while (count < s.length) {
-    matrix[row][col] = s[0]
+  let row = 0
+  let flag = -1
+
+  for (let i = 0; i < s.length; i++) {
+    strArr[row] += s[i]
+    if (row === 0 || row === numRows - 1) {
+      flag = -flag
+    }
+    row += flag
   }
+
+  return strArr.join('')
 }
 
-const s = 'PAYPALISHIRING',
-  numRows = 3
+const s = 'AB',
+  numRows = 1
 const res = convert(s, numRows)
+console.log(res)
