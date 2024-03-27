@@ -6,84 +6,42 @@
  */
 var generateMatrix = function (n) {
   const matrix = Array.from({ length: n }, () => [])
+  let l = 0,
+    r = n - 1,
+    t = 0,
+    b = n - 1
 
-  let col = 0
-  let row = 0
-  let flag = 0
-  let iter = 1
+  let num = 1,
+    tar = n * n
 
-  let rowOrCol = false
-
-  let i = 1
-
-  while (i <= n * n) {
-    // 行列切换
-    if (rowOrCol) {
-      if (iter > 0) {
-        if (row === n - 1) {
-          // 行列切换
-          rowOrCol = !rowOrCol
-          //
-          flag++
-          if (flag % 2 === 0) {
-            iter = -iter
-          }
-          continue
-        }
-        matrix[row][col] = i
-
-        row += iter
-        i++
-      } else {
-        if (row === 0) {
-          // 行列切换
-          rowOrCol = !rowOrCol
-          //
-          flag++
-          if (flag % 2 === 0) {
-            iter = -iter
-          }
-          continue
-        }
-        matrix[row][col] = i
-
-        row += iter
-        i++
-      }
-    } else {
-      if (iter > 0) {
-        if (col === n - 1) {
-          // 行列切换
-          rowOrCol = !rowOrCol
-          //
-          flag++
-          if (flag % 2 === 0) {
-            iter = -iter
-          }
-          continue
-        }
-        matrix[row][col] = i
-        col += iter
-        i++
-      } else {
-        if (col === 0) {
-          // 行列切换
-          rowOrCol = !rowOrCol
-          //
-          flag++
-          if (flag % 2 === 0) {
-            iter = -iter
-          }
-          continue
-        }
-        matrix[row][col] = i
-
-        col += iter
-        i++
-      }
+  while (num <= tar) {
+    for (let i = l; i <= r; i++) {
+      matrix[t][i] = num
+      num++
     }
-  }
 
+    t++
+
+    for (let i = t; i <= b; i++) {
+      matrix[i][r] = num
+      num++
+    }
+
+    r--
+
+    for (let i = r; i >= l; i--) {
+      matrix[b][i] = num
+      num++
+    }
+
+    b--
+
+    for (let i = b; i >= t; i--) {
+      matrix[i][l] = num
+      num++
+    }
+    l++
+  }
   return matrix
 }
 
