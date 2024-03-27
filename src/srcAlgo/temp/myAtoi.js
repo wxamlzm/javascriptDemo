@@ -14,26 +14,33 @@
  * @return {number}
  */
 var myAtoi = function (s) {
-  const numArr = []
-  let flag = 1
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === ' ') {
-    } else if (s[i] === '-') {
-      flag = -1
-    } else if (isNaN(s[i]) === false) {
-      numArr.push(Number(s[i]))
-    } else {
-      break
-    }
+  s = s.trim() // 删除首尾空格
+
+  if (!s) return 0 // 字符串为空则直接返回
+
+  let res = 0,
+    i = 1,
+    sign = 1
+
+  const int_max = Math.pow(2, 31) - 1,
+    int_min = -Math.pow(2, 31),
+    bndry = Math.floor(2 ** 31 / 10)
+
+  if (s[0] === '-') sign = -1 // 保存负号
+  else if (s[0] !== '+') i = 0 // 若无符号位，则需从 i = 0 开始数字拼接
+
+  for (const c of s.slice(i)) {
+    if (!('0' <= c && c <= '9')) break // 遇到非数字的字符则跳出
+
+    if (res > bndry || (res === bndry && c > '7'))
+      return sign === 1 ? int_max : int_min // 数字越界处理
+
+    res = 10 * res + c.charCodeAt(0) - '0'.charCodeAt(0) // 数字拼接
   }
-  if (numArr.length === 0) {
-    return 0
-  } else {
-    const res = Number(numArr.join(''))
-    return res * flag
-  }
+
+  return sign * res
 }
 
-const s = '   -42'
+const s = '+-12'
 const res = myAtoi(s)
 console.log(res)
