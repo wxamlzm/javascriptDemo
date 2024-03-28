@@ -12,11 +12,33 @@ var findDuplicate = function (nums) {
   // 不修改，排序就无效了
   // 哈希表不符合O(1)额外空间
   // 基础双循环？
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] === nums[j]) return nums[i]
+  // for (let i = 0; i < nums.length; i++) {
+  //   for (let j = i + 1; j < nums.length; j++) {
+  //     if (nums[i] === nums[j]) return nums[i]
+  //   }
+  // }
+  // 构思优化
+
+  let i = 0
+
+  while (i < nums.length) {
+    // 参考词条Floyd判圈法
+    if (nums[i] === i) {
+      i++
+
+      continue
     }
+
+    if (nums[nums[i]] === nums[i]) {
+      return nums[i]
+    }
+
+    // 交换 nums[i] 和 nums[nums[i]]
+
+    [nums[nums[i]], nums[i]] = [nums[i], nums[nums[i]]] // 这个交换法值得参考，但语义会不会被削弱
   }
+
+  return -1
 }
 
 const arr = (nums = [1, 3, 4, 2, 2])
