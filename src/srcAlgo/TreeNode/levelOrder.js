@@ -17,6 +17,8 @@ var levelOrder = function (root) {
   const queue = [root]
   // 初始化一个列表，用于保存遍历序列
   const list = []
+  if (!root) return list
+
   while (queue.length) {
     list.push([])
     for (let i = 1; i <= queue.length; i++) {
