@@ -27,4 +27,5 @@ var zigzagLevelOrder = function (root) {
   const queue = [root]
 
   // 居然可以想到广度优先后进行排序的啊
+  // 改变顺序不一定只盯着过程中的一环，整个过程中都是机会？
 }
