@@ -1,10 +1,3 @@
-/*
- * @Author: zd
- * @Date: 2024-03-28 14:42:44
- * @LastEditors: zd
- * @LastEditTime: 2024-03-28 14:42:54
- * @Description: 
- */
 /**
  * Definition for a binary tree node.
  * function TreeNode(val, left, right) {
