@@ -12,4 +12,19 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var zigzagLevelOrder = function (root) {}
+var zigzagLevelOrder = function (root) {
+  // 当前思路是更新root的顺序，让排序更适应当前锯齿的排序思想
+
+  // 重排root?
+  // 将root重排后放入数组？
+  // 重排必然要遍历，为什么不直接遍历得出结论？
+  // 问题又回到了如何遍历的问题
+
+  // 去空
+  const list = []
+  if (!root) return list
+
+  const queue = [root]
+
+  // 居然可以想到广度优先后进行排序的啊
+}
