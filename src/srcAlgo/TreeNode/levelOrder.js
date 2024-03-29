@@ -20,8 +20,9 @@ var levelOrder = function (root) {
   if (!root) return list
 
   while (queue.length) {
+    const currentLevelSize = queue.length
     list.push([])
-    for (let i = 1; i <= queue.length; i++) {
+    for (let i = 1; i <= currentLevelSize; i++) {
       let node = queue.shift() // 队列出队
       list[list.length - 1].push(node.val) // 保存节点值
       if (node.left) queue.push(node.left) // 左子节点入队
