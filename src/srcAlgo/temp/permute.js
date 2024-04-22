@@ -11,16 +11,16 @@ var permute = function (nums) {
   const len = nums.length
   const res = []
 
-  const dfs = x => {
-    if (x === len) {
+  const dfs = (start) => {
+    if (start === len) {
       res.push([...nums])
       return
     }
 
-    for (let i = x; i < len; i++) {
-      [nums[x], nums[i]] = [nums[i], nums[x]] // 优化的交换部分
-      dfs(x + 1)
-      [nums[x], nums[i]] = [nums[i], nums[x]] // 恢复原状
+    for (let i = start; i < len; i++) {
+      [nums[start], nums[i]] = [nums[i], nums[start]] // 优化的交换部分
+      dfs(start + 1);
+      [nums[start], nums[i]] = [nums[i], nums[start]] // 恢复原状
     }
   }
 
