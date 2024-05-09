@@ -14,11 +14,11 @@ var permuteUnique = function (nums) {
       return
     }
 
-    const disc = []
+    const used = new Set();
 
     for (let i = start; i < len; i++) {
-      if(nums[i] in disc) continue
-      disc.push(nums[i])
+      if (used.has(nums[i])) continue;
+      used.add(nums[i]);
       [nums[start], nums[i]] = [nums[i], nums[start]]
       dfs(start + 1);
       [nums[start], nums[i]] = [nums[i], nums[start]]
