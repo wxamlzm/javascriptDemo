@@ -9,6 +9,7 @@
  */
 var combinationSum2 = function (candidates, target) {
   let result = []
+  candidates.sort((a, b) => a - b)
   backtrack(candidates, target, 0, [], result)
   return result
 }
@@ -23,6 +24,7 @@ function backtrack (candidates, target, start, path, result) {
   }
 
   for (let i = start; i < candidates.length; i++) {
+    if (candidates[i] === candidates[i - 1]) continue
     path.push(candidates[i])
     const newTarget = target - candidates[i]
     backtrack(candidates, newTarget, i, path, result)
