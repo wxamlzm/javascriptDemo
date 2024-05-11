@@ -21,13 +21,14 @@ function backtrack (candidates, target, start, path, result) {
 
   if (target === 0) {
     result.push([...path])
+    return
   }
 
   for (let i = start; i < candidates.length; i++) {
     if (candidates[i] === candidates[i - 1]) continue
     path.push(candidates[i])
     const newTarget = target - candidates[i]
-    backtrack(candidates, newTarget, i, path, result)
+    backtrack(candidates, newTarget, i + 1, path, result)
     path.pop()
   }
 }
