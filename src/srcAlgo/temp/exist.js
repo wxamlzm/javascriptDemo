@@ -8,40 +8,51 @@
  * @return {boolean}
  */
 var exist = function (board, word) {
-  // 先遍历内层即行，再遍历外层，即列？
+  if (!board || board.length === 0 || board[0].length === 0) {
+    return false
+  }
 
-  // 数组为栈
-  const wordArray = word.split('')
-  // 从内层数组的第一个字母开始遍历
+  const m = board.length
+  const n = board[0].length
 
-  const hangLen = board[0].length
-  const lieLen = board.length
-  let i = 0,
-    j = 0
-
-  let wordFlag = false
-
-  while (i < lieLen) {
-    const curHang = board[i]
-    console.log(1)
-    while (j < hangLen) {
-      if (curHang[i] === wordArray[0]) {
-        wordArray.shift()
-        j++
-        // 切状态
-        wordFlag = true
-      }
-      // 这里要控制记录，当第一次有匹配值时，就需要连续匹配，中间如果有不匹配的，就重置状态
-      if (wordFlag === true && curHang[i] !== wordArray[0]) {
-        // 移动列
-        i++
-        // 跳出当前循环
-        break
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (dfs(board, word, i, j, 0)) {
+        return true
       }
     }
   }
 
-  console.log(wordArray)
+  return false
+}
+
+function dfs (board, word, i, j, index) {
+  if (index === word.length) {
+    return true
+  }
+
+  if (
+    i < 0 ||
+    i >= board.length ||
+    j < 0 ||
+    j >= board[0].length ||
+    board[i][j] !== word[index]
+  ) {
+    return false
+  }
+
+  const temp = board[i][j]
+  board[i][j] = '#' // 标记已访问过的元素
+
+  const found =
+    dfs(board, word, i + 1, j, index + 1) ||
+    dfs(board, word, i - 1, j, index + 1) ||
+    dfs(board, word, i, j + 1, index + 1) ||
+    dfs(board, word, i, j - 1, index + 1)
+
+  board[i][j] = temp // 还原元素
+
+  return found
 }
 
 const board = [
