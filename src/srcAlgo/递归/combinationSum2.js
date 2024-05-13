@@ -9,7 +9,7 @@
  */
 var combinationSum2 = function (candidates, target) {
   let result = []
-  candidates.sort((a, b) => a - b)
+  candidates.sort((a, b) => a - b) // 对 candidates 数组进行排序
   backtrack(candidates, target, 0, [], result)
   return result
 }
@@ -25,10 +25,17 @@ function backtrack (candidates, target, start, path, result) {
   }
 
   for (let i = start; i < candidates.length; i++) {
-    if (candidates[i] === candidates[i - 1]) continue
+    if (i > start && candidates[i] === candidates[i - 1]) {
+      continue
+    }
     path.push(candidates[i])
     const newTarget = target - candidates[i]
     backtrack(candidates, newTarget, i + 1, path, result)
     path.pop()
   }
 }
+
+const candidates = [10, 1, 2, 7, 6, 1, 5]
+const target = 8
+
+combinationSum2(candidates, target)
