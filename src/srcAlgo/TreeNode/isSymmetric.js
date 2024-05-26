@@ -11,14 +11,23 @@
  * @return {boolean}
  */
 var isSymmetric = function (root) {
-  // 到底时跳出
-  if (!root) return
-  if (root.left === root.right) {
-    isSymmetric(root.left)
-    isSymmetric(root.right)
-  }
+    // 如果根节点为空，直接返回true
+    if (!root) return true;
 
-  return true
+    // 辅助函数用于比较两个节点是否对称
+    function isMirror(left, right) {
+        // 如果两个节点都为空，对应对称
+        if (!left && !right) return true;
+        // 如果只有一个节点为空，不对称
+        if (!left || !right) return false;
+        // 如果两个节点的值不相等，不对称
+        if (left.val !== right.val) return false;
+        // 递归检查左节点的左子树和右节点的右子树，左节点的右子树和右节点的左子树
+        return isMirror(left.left, right.right) && isMirror(left.right, right.left);
+    }
+
+    // 初始调用，从根节点的左右子节点开始比较
+    return isMirror(root.left, root.right);
 }
 
 // 判断root的左右是否相等
