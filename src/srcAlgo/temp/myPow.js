@@ -6,25 +6,16 @@
  * @return {number}
  */
 var myPow = function (x, n) {
-  // 将 x 的 n 次幂问题
-
-  // 转换成
-
-  // x * x 重复n次
-
-  let res = 1
-
-  if (n === 0) return res
-
-  for (let i = 1; i <= Math.abs(n); i++) {
-    if (n > 0) {
-      res *= x
-    } else {
-      res = res / x
-    }
+  if (n === 0) return 1
+  if (n < 0) {
+    return 1 / myPow(x, -n)
   }
-
-  return res
+  if (n % 2 === 0) {
+    const half = myPow(x, n / 2)
+    return half * half
+  } else {
+    return x * myPow(x, n - 1)
+  }
 }
 
 const x = 2,
