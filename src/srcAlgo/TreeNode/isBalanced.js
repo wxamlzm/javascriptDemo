@@ -20,11 +20,12 @@ var isBalanced = function (root) {
 
     // 检查左子树
     const [isLeftBalance, leftDepth] = checkBalance(node.left)
-    if (isLeftBalance === false) return [false, 0]
+    if (isLeftBalance === false) return [false, 0] // 剪枝？
 
     // 检查右子树
     const [isRightBalance, rightDepth] = checkBalance(node.right)
-    if (isRightBalance === false) return [false, 0]
+    if (isRightBalance === false) return [false, 0] // 剪枝？
+
 
     // 判断当前节点是否平衡
     const isNodeBalance = Math.abs(leftDepth - rightDepth) <= 1
