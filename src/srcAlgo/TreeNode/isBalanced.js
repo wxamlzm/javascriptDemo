@@ -14,20 +14,25 @@ const { TreeNode } = require('../../utils/treeNode')
  * @return {boolean}
  */
 var isBalanced = function (root) {
-  // 是否平衡？
-  // 中任意节点的左子树和右子树的高度之差的绝对值不超过 1 。
+  function checkBalance (node) {
+    // 为空则为平衡
+    if (!node) return [true, 0]
 
-  return getDis(root, 0)
-}
+    // 检查左子树
+    const [isLeftBalance, leftDepth] = checkBalance(node.left)
+    if (isLeftBalance === false) return [false, 0]
 
-function getDis (node, dis = 0) {
-  // 每一层进行距离累加，到底后，返回总距离，最后左右相减，取绝对值
+    // 检查右子树
+    const [isRightBalance, rightDepth] = checkBalance(node.right)
+    if (isRightBalance === false) return [false, 0]
 
-  // 需要获取每一层node的层级
-  if (node.left) getDis(node.left, ++dis)
-  if (node.right) getDis(node.right, ++dis)
+    // 判断当前节点是否平衡
+    const isNodeBalance = Math.abs(leftDepth - rightDepth) <= 1
 
-  return dis
+    return [isNodeBalance, Math.max(leftDepth, rightDepth) + 1]
+  }
+
+  return checkBalance(root)[0]
 }
 
 const t0 = new TreeNode(3)
