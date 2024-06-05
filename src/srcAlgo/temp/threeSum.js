@@ -9,21 +9,37 @@
  * @return {number[][]}
  */
 var threeSum = function (nums) {
-  // 需要遍历 考虑迭代
-  // 不是单纯的便利，途中有判断条件，比如是否相等，因此，用while
+  nums.sort((a, b) => a - b)
 
-  // 首先，对数组进行排序
-  // 则排序后的数组，如果有相加为0的情况，必然是前面的和后面的相加，因为根据题设，需要负数和正数的情况
+  let res = []
+  let k = 0
 
-  const numsSort = nums.toSorted((a, b) => a - b)
+  for (k = 0; k < nums.length - 2; k++) {
+    if (nums[k] > 0) break
 
-  // 排序后，进行遍历
+    if (k > 0 && nums[k] === nums[k - 1]) continue // 题设不让重复
 
-  for(let i = 0; i < nums.length; i++){
-    // 遍历后
+    let i = k + 1
+    let j = nums.length - 1
+
+    while (i < j) {
+      let s = nums[k] + nums[i] + nums[j]
+      if (s < 0) {
+        i++
+        while (i < j && nums[i] === nums[i - 1]) i++ //跳过重复的nums[i]
+      } else if (s > 0) {
+        j--
+        while (i < j && nums[j] === nums[j + 1]) j-- //跳过重复的nums[j]
+      } else {
+        res.push([nums[k], nums[i], nums[j]])
+        i++
+        j--
+        while (i < j && nums[i] === nums[i - 1]) i++
+        while (i < j && nums[j] === nums[j + 1]) j--
+      }
+    }
   }
-
-
+  return res
 }
 
 const nums = [-1, 0, 1, 2, -1, -4]
