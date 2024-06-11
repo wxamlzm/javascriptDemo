@@ -5,17 +5,29 @@
  * @param {number} n
  * @return {number}
  */
+
+// var climbStairs = function (n) {
+//   if (n === 0) return 1
+//   if (n === 1) return 1
+
+//   // 走到n-1后1步，走到n-2后两步
+//   return climbStairs(n - 1) + climbStairs(n - 2)
+// }
+
+
 var climbStairs = function (n) {
-  let dp = new Array(n + 1)
+  const climbStairsCountArr = new Array(n + 1).fill(0)
 
-  dp[0] = 1
-  dp[1] = 1
-
-  for (let i = 2; i <= n; i++) {
-    dp[i] = dp[i - 1] + dp[i - 2]
+  for (let i = 0; i <= n; i++) {
+    if (i === 0 || i === 1) {
+      climbStairsCountArr[i] = 1
+    } else {
+      climbStairsCountArr[i] =
+        climbStairsCountArr[i - 1] + climbStairsCountArr[i - 2]
+    }
   }
 
-  return dp[n]
+  return climbStairsCountArr[n]
 }
 
 const n = 3
