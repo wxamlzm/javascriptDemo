@@ -9,21 +9,18 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-  const profitArray = new Array(prices.length).fill(0)
+  let minPrice = Infinity
+  let maxProfit = 0
+  for (let i = 0; i < prices.length; i++) {
+    minPrice = Math.min(prices[i], minPrice)
+    const profit = prices[i] - minPrice
 
-  for (let i = 0; i < prices.length - 1; i++) {
-    for (let j = i + 1; j < prices.length; j++) {
-      if (prices[j] < prices[i]) {
-        profitArray[i] = Math.max(0, profitArray[i])
-        continue
-      }
-      const profit = prices[j] - prices[i]
-      profitArray[i] = Math.max(profit, profitArray[i])
-    }
+    maxProfit = Math.max(maxProfit, profit)
   }
 
-  return Math.max(...profitArray)
+  return maxProfit
 }
 
-const prices = [2, 4, 1]
+const prices = [1, 2]
 const res = maxProfit(prices)
+console.log(res)
