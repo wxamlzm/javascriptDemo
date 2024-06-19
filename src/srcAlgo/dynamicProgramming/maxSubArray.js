@@ -29,20 +29,23 @@ var maxSubArray = function (nums) {
 
   // return maxSubSum
 
-  // nums中每一个index位置为起点，所得到的子数组的最大值作为dp记录
+  // nums中每一个index位置为终点？
   const numsLen = nums.length
   const dp = new Array(numsLen).fill(0)
 
-  let sum = 0
   for (let i = 0; i < numsLen; i++) {
-    sum += nums[i]
-    console.log(sum)
-    // 这里的问题在于，怎么排除，前置的sum
-    dp[i] = Math.max(nums[i], sum)
-    // for (let j = i + 1; j < numsLen; j++) {}
+    // 每次更新终点时，重置sum
+    let sum = nums[i]
+    dp[i] = nums[i]
+    for (let j = i - 1; j >= 0; j--) {
+      sum += nums[j]
+      dp[i] = Math.max(dp[i], sum)
+    }
   }
+
+  return Math.max(...dp)
 }
 
 const nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
 const res = maxSubArray(nums)
-// console.log(res)
+console.log(res)
