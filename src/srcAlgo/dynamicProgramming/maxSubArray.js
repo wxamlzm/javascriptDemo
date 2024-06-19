@@ -10,26 +10,39 @@
 var maxSubArray = function (nums) {
   // dp[i,j] = Math.max(dp[i-1,j], dp[i,j+1])
 
+  // const numsLen = nums.length
+
+  // if (numsLen === 1) return nums[0]
+
+  // let maxSubSum = -Infinity
+  // for (let i = 0; i < numsLen; i++) {
+  //   let tempSum = nums[i]
+  //   maxSubSum = Math.max(maxSubSum, tempSum)
+
+  //   if (i === numsLen - 1) break
+
+  //   for (let j = i + 1; j < numsLen; j++) {
+  //     tempSum += nums[j]
+  //     maxSubSum = Math.max(maxSubSum, tempSum)
+  //   }
+  // }
+
+  // return maxSubSum
+
+  // nums中每一个index位置为起点，所得到的子数组的最大值作为dp记录
   const numsLen = nums.length
+  const dp = new Array(numsLen).fill(0)
 
-  if (numsLen === 1) return nums[0]
-
-  let maxSubSum = -Infinity
+  let sum = 0
   for (let i = 0; i < numsLen; i++) {
-    let tempSum = nums[i]
-    maxSubSum = Math.max(maxSubSum, tempSum)
-
-    if (i === numsLen - 1) break
-
-    for (let j = i + 1; j < numsLen; j++) {
-      tempSum += nums[j]
-      maxSubSum = Math.max(maxSubSum, tempSum)
-    }
+    sum += nums[i]
+    console.log(sum)
+    // 这里的问题在于，怎么排除，前置的sum
+    dp[i] = Math.max(nums[i], sum)
+    // for (let j = i + 1; j < numsLen; j++) {}
   }
-
-  return maxSubSum
 }
 
-const nums = [-2, 1]
+const nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
 const res = maxSubArray(nums)
-console.log(res)
+// console.log(res)
