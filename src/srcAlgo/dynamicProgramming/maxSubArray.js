@@ -33,16 +33,24 @@ var maxSubArray = function (nums) {
   const numsLen = nums.length
   const dp = new Array(numsLen).fill(0)
 
-  for (let i = 0; i < numsLen; i++) {
-    // 每次更新终点时，重置sum
-    let sum = nums[i]
-    dp[i] = nums[i]
-    for (let j = i - 1; j >= 0; j--) {
-      sum += nums[j]
-      dp[i] = Math.max(dp[i], sum)
-    }
-  }
+  // for (let i = 0; i < numsLen; i++) {
+  //   // 每次更新终点时，重置sum
+  //   let sum = nums[i]
+  //   dp[i] = nums[i]
+  //   for (let j = i - 1; j >= 0; j--) {
+  //     sum += nums[j]
+  //     dp[i] = Math.max(dp[i], sum)
+  //   }
+  // }
 
+  // return Math.max(...dp)
+
+  dp[0] = nums[0]
+
+  for (let i = 1; i < numsLen; i++) {
+    dp[i] = dp[i] + nums[i]
+    dp[i] = Math.max(nums[i], dp[i - 1] + nums[i])
+  }
   return Math.max(...dp)
 }
 
