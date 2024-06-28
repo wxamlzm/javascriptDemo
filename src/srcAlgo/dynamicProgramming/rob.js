@@ -24,6 +24,34 @@ var rob = function (nums) {
   return Math.max(...dp)
 }
 
-const nums = [2, 7, 9, 3, 1]
-const res = rob(nums)
+// 新增条件房间是环形的
+// 即首项和末项不能同时选取
+var rob2 = function (nusm) {
+  const dp = new Array(nums.length).fill(0)
+
+  // 最后一项我单独处理？
+  for (let i = 0; i < nums.length; i++) {
+    if (i === 0 || i === 1) {
+      dp[i] = nums[i]
+    } else if (i === nums.length - 1) {
+      // 这里会有一个是否选中了numd[0]的情况
+      if (dp[i - 3] !== undefined) {
+        dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i]
+      } else {
+        dp[i] = Math.max(dp[i - 2]) + nums[i]
+      }
+    } else {
+      if (dp[i - 3] !== undefined) {
+        dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i]
+      } else {
+        dp[i] = Math.max(dp[i - 2]) + nums[i]
+      }
+    }
+  }
+
+  return Math.max(...dp)
+}
+
+const nums = [1, 2, 1, 1]
+const res = rob2(nums)
 console.log(res)
