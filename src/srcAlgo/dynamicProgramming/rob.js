@@ -26,32 +26,36 @@ var rob = function (nums) {
 
 // 新增条件房间是环形的
 // 即首项和末项不能同时选取
-var rob2 = function (nusm) {
-  const dp = new Array(nums.length).fill(0)
+var rob2 = function (nums) {
+  if (nums.length === 0) return 0
+  if (nums.length === 1) return nums[0]
+  if (nums.length === 2) return Math.max(...nums)
+  // 两个不能同时选取，就分去头和去尾的两组数组
+  const robFuc = nums => {
+    const dp = new Array(nums.length).fill(0)
 
-  // 最后一项我单独处理？
-  for (let i = 0; i < nums.length; i++) {
-    if (i === 0 || i === 1) {
-      dp[i] = nums[i]
-    } else if (i === nums.length - 1) {
-      // 这里会有一个是否选中了numd[0]的情况
-      if (dp[i - 3] !== undefined) {
-        dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i]
+    for (let i = 0; i < nums.length; i++) {
+      if (i === 0 || i === 1) {
+        dp[i] = nums[i]
       } else {
-        dp[i] = Math.max(dp[i - 2]) + nums[i]
-      }
-    } else {
-      if (dp[i - 3] !== undefined) {
-        dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i]
-      } else {
-        dp[i] = Math.max(dp[i - 2]) + nums[i]
+        if (dp[i - 3] !== undefined) {
+          dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i]
+        } else {
+          dp[i] = Math.max(dp[i - 2]) + nums[i]
+        }
       }
     }
+    return Math.max(...dp)
   }
+  const nums1 = nums.slice(0, nums.length - 1)
+  const nums2 = nums.slice(1, nums.length)
 
-  return Math.max(...dp)
+  const max1 = robFuc(nums1)
+  const max2 = robFuc(nums2)
+
+  return Math.max(max1, max2)
 }
 
-const nums = [1, 2, 1, 1]
+const nums = [1, 2, 3, 1]
 const res = rob2(nums)
 console.log(res)
