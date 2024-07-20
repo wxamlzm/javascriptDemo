@@ -28,6 +28,7 @@ var lengthOfLIS = function (nums) {
   return maxLen
 }
 
+// 空间优化
 var lengthOfLIS = function (nums) {
   if (nums.length === 0) return 0
   const dp = new Array(nums.length).fill(1)
