@@ -7,31 +7,28 @@
  * @return {number}
  */
 var lengthOfLIS = function (nums) {
-  // 条件1： nums[i+1] > nums[i] 必然成立
-  // 条件2： 在所有符合条件1的子数组中最长
+  // 建立数组缓存所有子序列
+  const sequences = nums.map(() => [])
+  // 初始化
+  let maxLen = 1
 
-  let maxLen = 0
-
-  for (let i = 0; i < nums.length - 1; i++) {
-    let tempLen = 1
-    let pre = nums[i]
-    const temp = []
-    temp.push(pre)
-    for (let j = i + 1; j < nums.length; j++) {
-      console.log(`i:${nums[i]},j:${nums[j]}`)
-      // 在遍历过程中碰到了需要跳过的项，该如何设置条件排除或者绕过？
-      if (nums[j] > pre) {
-        temp.push(nums[j])
-        tempLen++
-        pre = nums[j]
+  // 遍历 穷举节点
+  for (let i = 0; i < nums.length; i++) {
+    // 初始化数组
+    sequences[i].push(nums[i])
+    // 遍历所有i之前的子数组
+    for (let j = 0; j < i; j++) {
+      // 判断递增
+      if (nums[i] > nums[j] && sequences[j].length + 1 > sequences[i].length) {
+        sequences[i] = [...sequences[i], nums[i]]
       }
     }
-    console.log(temp)
-    maxLen = Math.max(tempLen, maxLen)
+    maxLen = Math.max(maxLen, sequences[i].length)
   }
-  // console.log(maxLen)
+  return maxLen
 }
 
 const nums = [0, 1, 0, 3, 2, 3]
 
-lengthOfLIS(nums)
+const res = lengthOfLIS(nums)
+console.log(res)
