@@ -20,7 +20,7 @@ var lengthOfLIS = function (nums) {
     for (let j = 0; j < i; j++) {
       // 判断递增
       if (nums[i] > nums[j] && sequences[j].length + 1 > sequences[i].length) {
-        sequences[i] = [...sequences[i], nums[i]]
+        sequences[i] = [...sequences[j], nums[i]]
       }
     }
     maxLen = Math.max(maxLen, sequences[i].length)
