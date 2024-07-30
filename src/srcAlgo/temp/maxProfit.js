@@ -9,30 +9,16 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-  // 队列？
-  // 1. 后置减前置，求最大值，
-  // 2. 配置快慢指针，指针随index下移，保证完整性;
-  // 3. prices[sell] - prices[buy]符合题中的购买后
-  // 4. 购买后buy = sell+1; sell = buy+1;更新index
-  // 5. 定义profits = new Array(prices.length),profits[i]为当天卖出的最大利润， profits[sell] = Math.max(...profits, prices[sell]-prices[buy])
+  let maxProfit = 0
 
-  const profits = new Array(prices.length).fill(0)
-  // i > 0 情况下的前利润 + 当前利润
-  profits[i] = Math.max(profits[i - 1] + prices[sell] - prices[buy])
+  if (prices.length === 0) return 0
 
-  // 初始化
-  let sell = 1
-  let buy = 0
-  while (sell < prices.length) {
-
-
-    // 卖出条件是盈利,即我认为有盈利即卖即可达成最大利润，这点不知道能不能占住，又怎么验证
-    
-    
-    
-    // 迭代循环
-    sell = buy + 1
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i] > prices[i - 1]) {
+      maxProfit += prices[i] - prices[i - 1]
+    }
   }
+  return maxProfit
 }
 
 const prices = [7, 1, 5, 3, 6, 4]
