@@ -45,8 +45,19 @@ var isValid = function (s) {
   return bracketsStack.length === 0
 }
 
-let s = '()'
+let s = '[({})]'
 
-const res = isValid(s)
-console.log(res)
+// const res = isValid(s)
+// console.log(res)
 // PS，结果这个思路就是官方思路
+
+// 偷懒的做法，可以拿来应付面试题
+function isValid2 (s) {
+  while (s.includes('()') || s.includes('{}') || s.includes('[]')) {
+    s = s.replace('()', '').replace('{}', '').replace('[]', '')
+  }
+
+  return s.length === 0
+}
+const res2 = isValid2(s)
+console.log(res2)
