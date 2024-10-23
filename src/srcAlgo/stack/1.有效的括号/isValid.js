@@ -23,10 +23,11 @@ var isValid = function (s) {
     // let of
     if (char in sObj) {
       stack.push(char)
-    }else {
+    } else {
+      if (stack.length === 0) return false
       const stackTop = stack.pop()
       const expectedRightBracket = sObj[stackTop]
-      if (expectedRightBracket !== char){
+      if (expectedRightBracket !== char) {
         return false
       }
     }
@@ -34,7 +35,7 @@ var isValid = function (s) {
   return stack.length === 0
 }
 
-let s = '[({})]'
+let s = ']'
 
 const res = isValid(s)
 console.log(res)
