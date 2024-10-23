@@ -8,7 +8,10 @@
 //     boolean empty() 如果队列为空，返回 true ；否则，返回 false
 
 var MyQueue = function () {
-  this.queue = []
+  // 输入栈
+  this.inputStack = []
+  // 输出栈
+  this.outputStack = []
 }
 
 /**
@@ -16,34 +19,43 @@ var MyQueue = function () {
  * @return {void}
  */
 MyQueue.prototype.push = function (x) {
-  this.queue.push(x)
+  this.inputStack.push(x)
 }
 
 /**
  * @return {number}
  */
 MyQueue.prototype.pop = function () {
-  if (this.queue.empty) throw new Error('空队列')
-  return this.queue.shift()
+  // 倒装进输入栈
+  if (this.outputStack.length === 0) {
+    while (this.inputStack.length !== 0) {
+      const lastStack = this.inputStack.pop()
+      this.outputStack.push(lastStack)
+    }
+  }
+  // 输出栈的最后一个，即输入栈的第一个，即期望的队列开头的元素
+  return this.outputStack.pop()
 }
 
 /**
  * @return {number}
  */
 MyQueue.prototype.peek = function () {
-  if (this.queue.empty) throw new Error('空队列')
-  return this.queue[0]
+  // 倒装进输入栈
+  if (this.outputStack.length === 0) {
+    while (this.inputStack.length !== 0) {
+      const lastStack = this.inputStack.pop()
+      this.outputStack.push(lastStack)
+    }
+  }
+  return this.outputStack[this.outputStack.length - 1]
 }
 
 /**
  * @return {boolean}
  */
 MyQueue.prototype.empty = function () {
-  if (this.queue.length === 0) {
-    return true
-  } else {
-    return false
-  }
+  return this.inputStack.length === 0 && this.outputStack.length === 0
 }
 
 /**
