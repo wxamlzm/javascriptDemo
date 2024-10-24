@@ -6,12 +6,16 @@
 //     int pop() 从队列的开头移除并返回元素
 //     int peek() 返回队列开头的元素
 //     boolean empty() 如果队列为空，返回 true ；否则，返回 false
+// 说明：
+
+// 你 只能 使用标准的栈操作 —— 也就是只有 push to top, peek/pop from top, size, 和 is empty 操作是合法的。
+// 你所使用的语言也许不支持栈。你可以使用 list 或者 deque（双端队列）来模拟一个栈，只要是标准的栈操作即可。
 
 var MyQueue = function () {
   // 输入栈
-  this.inputStack = []
+  this.inStack = []
   // 输出栈
-  this.outputStack = []
+  this.outStack = []
 }
 
 /**
@@ -19,50 +23,47 @@ var MyQueue = function () {
  * @return {void}
  */
 MyQueue.prototype.push = function (x) {
-  this.inputStack.push(x)
+  this.inStack.push(x)
 }
 
 /**
  * @return {number}
  */
 MyQueue.prototype.pop = function () {
-  // 倒装进输入栈
-  if (this.outputStack.length === 0) {
-    while (this.inputStack.length !== 0) {
-      const lastStack = this.inputStack.pop()
-      this.outputStack.push(lastStack)
-    }
+  // 因为js的pop是移除末尾
+  // 而当前的pop期望是移除开头，而当前题设期望要求是仅用pop和push
+  // 设法倒装inStack到outStack
+  // 而输出栈中如果是未空状态，则意味着，先入的还未出，而根据push和pop的效果，此时再push入的输入栈数据则会被先出而违背了需求
+  if (this.outStack.length === 0) {
+    this.transferElements()
   }
-  // 输出栈的最后一个，即输入栈的第一个，即期望的队列开头的元素
-  return this.outputStack.pop()
+  return this.outStack.pop()
 }
 
 /**
  * @return {number}
  */
 MyQueue.prototype.peek = function () {
-  // 倒装进输入栈
-  if (this.outputStack.length === 0) {
-    while (this.inputStack.length !== 0) {
-      const lastStack = this.inputStack.pop()
-      this.outputStack.push(lastStack)
-    }
+  if (this.outStack.length === 0) {
+    this.transferElements()
   }
-  return this.outputStack[this.outputStack.length - 1]
+  // 队列开头是指输入栈的第一个，即输出栈的最后一个
+  // 为什么不能用inStack[0]，因为输出栈可能非空
+  return this.outStack[this.outStack.length - 1]
 }
 
 /**
  * @return {boolean}
  */
 MyQueue.prototype.empty = function () {
-  return this.inputStack.length === 0 && this.outputStack.length === 0
+  return this.inStack.length === 0 && this.outStack.length === 0
 }
 
-/**
- * Your MyQueue object will be instantiated and called as such:
- * var obj = new MyQueue()
- * obj.push(x)
- * var param_2 = obj.pop()
- * var param_3 = obj.peek()
- * var param_4 = obj.empty()
+/*
+ * 辅助方法：将入栈的所有元素转移到出队栈
  */
+MyQueue.prototype.transferElements = function () {
+  while (this.inStack.length > 0) {
+    this.outStack.push(this.inStack.pop())
+  }
+}
