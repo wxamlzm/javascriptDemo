@@ -10,9 +10,9 @@
 */
 
 var MinStack = function () {
-  // 主栈：存储所有元素
-  this.dataStack = []
-  // 辅助栈：存储每个阶段的最小值
+  // 主栈
+  this.stack = []
+  // 最小值的辅助栈
   this.minStack = []
 }
 
@@ -21,8 +21,9 @@ var MinStack = function () {
  * @param {number} val - 要推入的值
  */
 MinStack.prototype.push = function (val) {
-  this.dataStack.push(val)
-  // 如果辅助栈为空新元素小于等于当前最小值，则将新元素推入辅助栈
+  // 更新主栈
+  this.stack.push(val)
+  // 更新辅助栈，即将最小值压入辅助栈的栈顶
   if (
     this.minStack.length === 0 ||
     val <= this.minStack[this.minStack.length - 1]
@@ -35,23 +36,23 @@ MinStack.prototype.push = function (val) {
  * @return {void}
  */
 MinStack.prototype.pop = function () {
-  if (this.dataStack.length === 0) return
+  if (this.stack.length === 0) return
+  // 如果pop是最小值，那需要同步更新辅助栈
+  const stackTop = this.stack.pop()
+  const minStackTop = this.minStack[this.minStack.length - 1]
 
-  // 如果弹出的元素是当前最小值，辅助栈也要弹出
-  if (
-    this.dataStack[this.dataStack.length - 1] ===
-    this.minStack[this.minStack.length - 1]
-  ) {
+  if (stackTop === minStackTop) {
     this.minStack.pop()
   }
-  this.dataStack.pop()
+
+  return stackTop
 }
 
 /**
  * @return {number} // top不能改变数组
  */
 MinStack.prototype.top = function () {
-  return this.dataStack[this.dataStack.length - 1]
+  return this.stack[this.stack.length - 1]
 }
 
 /**
