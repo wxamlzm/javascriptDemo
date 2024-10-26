@@ -30,10 +30,8 @@ MyQueue.prototype.push = function (x) {
  * @return {number}
  */
 MyQueue.prototype.pop = function () {
-  // 因为js的pop是移除末尾
-  // 而当前的pop期望是移除开头，而当前题设期望要求是仅用pop和push
-  // 设法倒装inStack到outStack
-  // 而输出栈中如果是未空状态，则意味着，先入的还未出，而根据push和pop的效果，此时再push入的输入栈数据则会被先出而违背了需求
+  // 转换输出栈
+  // 根据先入先出的队列原则，需要先清空输出栈
   if (this.outStack.length === 0) {
     this.transferElements()
   }
@@ -47,8 +45,6 @@ MyQueue.prototype.peek = function () {
   if (this.outStack.length === 0) {
     this.transferElements()
   }
-  // 队列开头是指输入栈的第一个，即输出栈的最后一个
-  // 为什么不能用inStack[0]，因为输出栈可能非空
   return this.outStack[this.outStack.length - 1]
 }
 
@@ -63,7 +59,7 @@ MyQueue.prototype.empty = function () {
  * 辅助方法：将入栈的所有元素转移到出队栈
  */
 MyQueue.prototype.transferElements = function () {
-  while (this.inStack.length > 0) {
+  while (this.inStack.length !== 0) {
     this.outStack.push(this.inStack.pop())
   }
 }
