@@ -8,28 +8,32 @@
  * @return {number[]}
  */
 var maxSlidingWindow = function (nums, k) {
+  // 双端队列用来春初候选最大值的索引
   const deque = []
-  const maxArray = []
+  const result = []
 
   for (let i = 0; i < nums.length; i++) {
-    // 移除窗口左侧不在范围内的元素
-    if (deque.length > 0 && deque[0].index <= i - k) {
+    // 1. 清理队列中过期的索引（已经不在当前窗口范围内的）
+    if (deque.length > 0 && deque[0] <= i - k) {
       deque.shift()
     }
 
-    // 将窗口右侧的元素加入单调递减队列
-    while (deque.length > 0 && nums[i] >= nums[deque[deque.length - 1].index]) {
+    // 2. 从队列尾移除所有小于当前元素的值
+    // 保持队列是单调递减的
+    while (deque.length > 0 && nums[deque[deque.length - 1]] < nums[i]) {
       deque.pop()
     }
-    deque.push({ value: nums[i], index: i })
 
-    // 只有当i位置在窗口范围内时才添加最大值到结果数组
+    // 3. 将当前索引加入队列
+    deque.push(i)
+
+    // 4. 当窗口形成后，记录当前窗口的最大值
     if (i >= k - 1) {
-      maxArray.push(deque[0].value)
+      result.push(nums[deque[0]])
     }
   }
 
-  return maxArray
+  return result
 }
 
 let nums = [1, 3, -1, -3, 5, 3, 6, 7],
