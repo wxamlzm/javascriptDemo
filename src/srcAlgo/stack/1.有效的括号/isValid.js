@@ -45,9 +45,34 @@ var isValid = function (s) {
   return leftBrackets.length === 0
 }
 
-let s = '[({})]'
+const isValid2 = function (s) {
+  // 建立映射关系
+  const bracketsObj = {
+    '(': ')',
+    '[': ']',
+    '{': '}'
+  }
 
-const res = isValid(s)
+  const leftBracketsStack = []
+
+  for (let char of s) {
+    if (char in bracketsObj) {
+      leftBracketsStack.push(char)
+    } else {
+      // 只有右括号必然不符
+      if (leftBracketsStack.length === 0) return false
+      const expectedRightBracket = bracketsObj[leftBracketsStack.pop()]
+      if (expectedRightBracket !== char) {
+        return false
+      }
+    }
+  }
+  return leftBracketsStack.length === 0
+}
+
+let s = '()'
+
+const res = isValid2(s)
 console.log(res)
 // PS，结果这个思路就是官方思路
 
