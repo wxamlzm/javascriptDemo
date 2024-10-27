@@ -10,36 +10,30 @@
  * @return {string}
  */
 var decodeString = function (s) {
-  // 数字栈-存储重复次数
-  const numStack = []
-  // 字符串栈- 存储待处理字符串
+  // 遍历次数栈
+  const countStack = []
+  // 字符串栈
   const strStack = []
 
-  let currentNum = 0 // 当前数字
-  let currentStr = '' // 当前字符串
+  // 初始化遍历次数
+  let currentNum = 0
+  // 初始化临时字符串
+  let currentStr = ''
 
-  // 遍历输入字符串
+  // 遍历字符串
   for (let char of s) {
     if (isNaN(char) === false) {
-      // 处理多位数字的情况
       currentNum = currentNum * 10 + Number(char)
     } else if (char === '[') {
-      // 遇到左括号，将当前数字和字符串分别压入对应栈中
-      numStack.push(currentNum)
-      strStack.push(currentStr)
-      // 重置当前数字和字符串
+      countStack.push(currentNum)
       currentNum = 0
+      strStack.push(currentStr)
       currentStr = ''
     } else if (char === ']') {
-      // 遇到右括号，处理栈顶的数字和字符串
-      // 1. 获取重复次数
-      const repeatTimes = numStack.pop()
-      // 2.获取之前的字符串
-      const prevStr = strStack.pop()
-      // 3.将当前字符串重复指定次数，并与之前的字符串拼接
-      currentStr = prevStr + currentStr.repeat(repeatTimes)
+      let repestTimes = countStack.pop()
+      let prevStr = strStack.pop()
+      currentStr = prevStr + currentStr.repeat(repestTimes)
     } else {
-      // 普通字符串直接追加到当前字符串
       currentStr += char
     }
   }
