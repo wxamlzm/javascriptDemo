@@ -8,31 +8,32 @@
  * @return {number[]}
  */
 var maxSlidingWindow = function (nums, k) {
-  // 双端队列用来春初候选最大值的索引
-  const deque = []
-  const result = []
+  // 使用双端队列来维护一个单调递减的队列
+  // 队列中存储的是索引值，通过索引即可以获取具体数值，也可以判断是否在窗口范围内
+  const deque = [] // 双端队列，春初索引
+  const result = [] // 结果数组，存储每个窗口的最大值
 
   for (let i = 0; i < nums.length; i++) {
-    // 1. 清理队列中过期的索引（已经不在当前窗口范围内的）
-    if (deque.length > 0 && deque[0] <= i - k) {
-      deque.shift()
-    }
-
-    // 2. 从队列尾移除所有小于当前元素的值
-    // 保持队列是单调递减的
+    // 1. 移除队列中所有小于当前值的元素
+    // 保持队列单调递减的性质
+    // 因为如果前面的数字小于当前数字，那么他们永远不可能成为后续窗口的最大值
     while (deque.length > 0 && nums[deque[deque.length - 1]] < nums[i]) {
       deque.pop()
     }
 
-    // 3. 将当前索引加入队列
+    // 2. 将当前索引值加入队列
     deque.push(i)
 
-    // 4. 当窗口形成后，记录当前窗口的最大值
+    // 3.移除超出窗口范围的索引
+    if (deque[0] <= i - k) {
+      deque.shift()
+    }
+
+    // 4.当形成第一个窗口后，开始收集结果
     if (i >= k - 1) {
       result.push(nums[deque[0]])
     }
   }
-
   return result
 }
 
