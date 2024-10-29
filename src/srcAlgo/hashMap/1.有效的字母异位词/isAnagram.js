@@ -8,37 +8,34 @@
  * @return {boolean}
  */
 var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false
+
   const getMap = str => {
-    const sMap = new Map()
-    for (let i = 0; i < str.length; i++) {
-      if (sMap.has(str[i]) === false) {
-        sMap.set(str[i], 1)
+    const strMap = {}
+
+    for (let char of str) {
+      if (char in strMap) {
+        strMap[char] += 1
       } else {
-        const count = sMap.get(str[i])
-        sMap.set(str[i], count + 1)
+        strMap[char] = 1
       }
     }
-    return sMap
+    return strMap
   }
+
   const sMap = getMap(s)
   const tMap = getMap(t)
 
-  if (sMap.size !== tMap.size) return false
-
-  let isAnagram = true
-  sMap.forEach((value, key, map) => {
-    if (tMap.get(key) !== value) {
-      isAnagram = false
-    }
-  })
-  return isAnagram
+  for (let char in sMap) {
+    if (tMap[char] !== sMap[char]) return false
+  }
+  return true
 }
 
 let s = 'anagram',
   t = 'nagaram'
 const res = isAnagram(s, t)
 console.log(res)
-
 
 // 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
 
@@ -87,4 +84,3 @@ console.log(res)
 // const t = 'car'
 // const res = isAnagram(s, t)
 // console.log(res)
-
