@@ -8,28 +8,26 @@
  * @return {number[]}
  */
 var maxSlidingWindow = function (nums, k) {
-  // 使用双端队列来维护一个单调递减的队列
-  // 队列中存储的是索引值，通过索引即可以获取具体数值，也可以判断是否在窗口范围内
-  const deque = [] // 双端队列，春初索引
-  const result = [] // 结果数组，存储每个窗口的最大值
+  // 队列顶部出，队列尾部入，双端队列契合题意
+  const deque = []
+  // 用于压入结果
+  const result = []
 
+  // 下标可以获取值，也可以便于控制窗口
   for (let i = 0; i < nums.length; i++) {
-    // 1. 移除队列中所有小于当前值的元素
-    // 保持队列单调递减的性质
-    // 因为如果前面的数字小于当前数字，那么他们永远不可能成为后续窗口的最大值
+    // 只留最大值，如果小于当前值，就说明不可能成为最大值
     while (deque.length > 0 && nums[deque[deque.length - 1]] < nums[i]) {
       deque.pop()
     }
 
-    // 2. 将当前索引值加入队列
     deque.push(i)
 
-    // 3.移除超出窗口范围的索引
+    // 移动窗口的边界，队列顶部序号小于当前需要扣掉队列长度的时候，说明超出窗口了
     if (deque[0] <= i - k) {
       deque.shift()
     }
 
-    // 4.当形成第一个窗口后，开始收集结果
+    // 当第一次窗口形成的时候，压入结果
     if (i >= k - 1) {
       result.push(nums[deque[0]])
     }
@@ -37,7 +35,7 @@ var maxSlidingWindow = function (nums, k) {
   return result
 }
 
-let nums = [1, 3, -1, -3, 5, 3, 6, 7],
+let nums = [1, -1],
   k = 3
 
 const res = maxSlidingWindow(nums, k)
