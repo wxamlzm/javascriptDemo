@@ -10,28 +10,25 @@
 // 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
 // 你可以按任意顺序返回答案。
 
-var twoSum = function (nums, target) {
-  let array = []
-  for (var i = 0; i < nums.length; i++) {
-    for (var j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target) {
-        array = [i, j]
-      }
+function twoSum (nums, target) {
+  const hashMap = {}
+
+  for (let i = 0; i < nums.length; i++) {
+    // 计算当前需要寻求的补数
+    const complement = target - nums[i]
+
+    // 如果补数存在于哈希表中，说明找到了答案
+    if (complement in hashMap) {
+      return [hashMap[complement], i]
     }
+
+    // 将当前数字和下标存入哈希表
+    hashMap[nums[i]] = i
   }
-  return array
+  return null
 }
 
-// 这个写法降低了近一半的时间，但是为什么
-function twoSum (nums, target) {
-  let hashTable = {}
-  for (let i = 0; i < nums.length; i++) {
-    const x = nums[i]
-    const complement = target - x
-    if (complement in hashTable) {
-      return [hashTable[complement], i]
-    }
-    hashTable[x] = i
-  }
-  return null // 或者返回空数组：return [];
-}
+const nums = [3, 2, 4],
+  target = 6
+const res = twoSum(nums, target)
+console.log(res)
