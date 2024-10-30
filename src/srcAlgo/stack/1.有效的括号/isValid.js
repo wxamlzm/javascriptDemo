@@ -46,28 +46,33 @@ var isValid = function (s) {
 }
 
 const isValid2 = function (s) {
-  // 建立映射关系
-  const bracketsObj = {
-    '(': ')',
+  // 建议一个映射关系方便匹配
+  const bracketPairs = {
+    '{': '}',
     '[': ']',
-    '{': '}'
+    '(': ')'
   }
 
-  const leftBracketsStack = []
-
+  const leftBrackets = []
   for (let char of s) {
-    if (char in bracketsObj) {
-      leftBracketsStack.push(char)
+    if (char in bracketPairs) {
+      // 左括号压入
+      leftBrackets.push(char)
     } else {
-      // 只有右括号必然不符
-      if (leftBracketsStack.length === 0) return false
-      const expectedRightBracket = bracketsObj[leftBracketsStack.pop()]
+      // 没有前置左括号不符合题意
+      if (leftBrackets.length === 0) return false
+      // 栈顶左括号对应的右括号
+      const expectedRightBracket =
+        bracketPairs[leftBrackets[leftBrackets.length - 1]]
       if (expectedRightBracket !== char) {
         return false
+      } else {
+        leftBrackets.pop()
       }
     }
   }
-  return leftBracketsStack.length === 0
+
+  return leftBrackets.length === 0
 }
 
 let s = '()'
