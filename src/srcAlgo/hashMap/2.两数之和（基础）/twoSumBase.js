@@ -11,19 +11,21 @@
 // 你可以按任意顺序返回答案。
 
 function twoSum (nums, target) {
-  const hashMap = {}
+  // 因为要的是下标，我们遍历时能得到当前数下标，如果能匹配到，则能获得另一个
+  const numIndexMap = {}
 
   for (let i = 0; i < nums.length; i++) {
-    // 计算当前需要寻求的补数
-    const complement = target - nums[i]
+    // 先匹配，再压入对象
+    const cur = nums[i]
+    // 补数
+    const other = target - cur
 
-    // 如果补数存在于哈希表中，说明找到了答案
-    if (complement in hashMap) {
-      return [hashMap[complement], i]
+    // 判断补数是否已经在对象中
+    if (other in numIndexMap) {
+      return [numIndexMap[other], i]
+    } else {
+      numIndexMap[cur] = i
     }
-
-    // 将当前数字和下标存入哈希表
-    hashMap[nums[i]] = i
   }
   return null
 }

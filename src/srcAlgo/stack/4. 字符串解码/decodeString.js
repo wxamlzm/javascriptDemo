@@ -10,35 +10,34 @@
  * @return {string}
  */
 var decodeString = function (s) {
-  // 遍历次数栈
   const countStack = []
-  // 字符串栈
-  const strStack = []
+  const contextStack = []
 
-  // 初始化遍历次数
-  let currentNum = 0
-  // 初始化临时字符串
-  let currentStr = ''
+  let curCount = 0
+  let curStr = ''
 
-  // 遍历字符串
   for (let char of s) {
+    // 是数值
     if (isNaN(char) === false) {
-      currentNum = currentNum * 10 + Number(char)
+      curCount = curCount * 10 + Number(char)
     } else if (char === '[') {
-      countStack.push(currentNum)
-      currentNum = 0
-      strStack.push(currentStr)
-      currentStr = ''
+      // 数值入栈
+      countStack.push(curCount)
+      // 重置数值
+      curCount = 0
+      // str入栈？
+      contextStack.push(curStr)
+      curStr = ''
     } else if (char === ']') {
-      let repestTimes = countStack.pop()
-      let prevStr = strStack.pop()
-      currentStr = prevStr + currentStr.repeat(repestTimes)
+      // 右括号会从内层开始？
+      const strTop = contextStack.pop()
+      const countTop = countStack.pop()
+      curStr = strTop + curStr.repeat(countTop)
     } else {
-      currentStr += char
+      curStr += char
     }
   }
-
-  return currentStr
+  return curStr
 }
 
 let s = '3[a2[c]]'
