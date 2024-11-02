@@ -11,20 +11,16 @@
 // 你可以按任意顺序返回答案。
 
 function twoSum (nums, target) {
-  // 因为要的是下标，我们遍历时能得到当前数下标，如果能匹配到，则能获得另一个
   const numIndexMap = {}
 
   for (let i = 0; i < nums.length; i++) {
-    // 先匹配，再压入对象
-    const cur = nums[i]
-    // 补数
-    const other = target - cur
-
-    // 判断补数是否已经在对象中
-    if (other in numIndexMap) {
-      return [numIndexMap[other], i]
+    const x = nums[i]
+    const anOther = target - x
+    // 如果能找到anOther说明该值已经在前面出现过了
+    if (anOther in numIndexMap) {
+      return [numIndexMap[anOther], i]
     } else {
-      numIndexMap[cur] = i
+      numIndexMap[x] = i
     }
   }
   return null
